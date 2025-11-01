@@ -76,9 +76,6 @@ const Home = () => {
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
         <Hero3DAnimation />
         
-        {/* Subtle overlay for text clarity */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/10 to-primary/30 z-[5]"></div>
-        
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="mb-12 animate-fade-in">
             <img 
