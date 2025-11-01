@@ -1,6 +1,6 @@
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
+import { Float, Edges } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface TileProps {
@@ -71,12 +71,13 @@ const Tile = ({ position, delay, color }: TileProps) => {
         <boxGeometry args={[1.8, 1.8, 0.2]} />
         <meshStandardMaterial
           color={color}
-          roughness={0.3}
-          metalness={0.2}
-          envMapIntensity={0.8}
+          roughness={0.4}
+          metalness={0.1}
+          envMapIntensity={0.7}
           transparent={true}
-          opacity={0.75}
+          opacity={0.9}
         />
+        <Edges scale={1.002} threshold={15} color={'hsl(0 0% 55%)'} />
       </mesh>
     </Float>
   );
@@ -86,9 +87,8 @@ const TileGrid = () => {
   const tiles = useMemo(() => {
     const result = [];
     const colors = [
-      '#e8dcc4', '#d4c5a9', '#f5f0e8', '#e0d5c7',
-      '#c9b99a', '#f0e6d2', '#dfd1b8', '#e5dac5',
-      '#d8cbb3', '#ebe2d0'
+      'hsl(35 30% 72%)', 'hsl(30 25% 68%)', 'hsl(40 20% 76%)',
+      'hsl(0 0% 78%)', 'hsl(0 0% 72%)', 'hsl(25 20% 64%)'
     ];
 
     let delayCounter = 0;
