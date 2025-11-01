@@ -44,10 +44,10 @@ const Tile = ({ position, color, scrollY }: TileProps) => {
       <boxGeometry args={[0.8, 0.8, 0.15]} />
       <meshStandardMaterial
         color={color}
-        roughness={0.3}
-        metalness={0.2}
+        roughness={0.4}
+        metalness={0.1}
         transparent={true}
-        opacity={0.4}
+        opacity={0.6}
         side={THREE.DoubleSide}
       />
     </mesh>
@@ -58,12 +58,14 @@ const TileGrid = ({ scrollY }: { scrollY: number }) => {
   const tiles = useMemo(() => {
     const result = [];
     const colors = [
-      '#e8dcc4', // Beige ceramic
-      '#d4c5a9', // Light brown
-      '#f5f5f5', // Off white
-      '#e0e0e0', // Light gray
-      '#c9b8a3', // Warm beige
-      '#f0ead6', // Cream
+      '#8B7355', // Rich brown ceramic
+      '#A0826D', // Warm terracotta
+      '#6B8E23', // Olive ceramic
+      '#8B4513', // Saddle brown
+      '#CD853F', // Peru ceramic
+      '#D2691E', // Chocolate ceramic
+      '#B8860B', // Dark goldenrod
+      '#8B6914', // Golden brown
     ];
 
     // Reduced number of tiles
@@ -102,16 +104,16 @@ export const Hero3DAnimation = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0">
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
       <Canvas
         camera={{ position: [0, 0, 20], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 5, 5]} intensity={0.4} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.2} />
-        <pointLight position={[0, 10, 5]} intensity={0.3} color="#f0ead6" />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={0.6} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.3} />
+        <pointLight position={[0, 10, 5]} intensity={0.4} color="#D2691E" />
 
         <TileGrid scrollY={scrollY} />
       </Canvas>
