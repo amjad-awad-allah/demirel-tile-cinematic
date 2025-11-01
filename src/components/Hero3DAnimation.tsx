@@ -31,20 +31,20 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Warm beige marble base gradient (#F5F4F2 → #E7E3DD)
+      // Darker warm beige marble base gradient (#E9E5DE → #DCD6CF)
       const baseGradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 1024);
-      baseGradient.addColorStop(0, '#F8F7F5');
-      baseGradient.addColorStop(0.25, '#F5F4F2');
-      baseGradient.addColorStop(0.5, '#F0EEE9');
-      baseGradient.addColorStop(0.75, '#EBE8E3');
-      baseGradient.addColorStop(1, '#E7E3DD');
+      baseGradient.addColorStop(0, '#F0EDE6');
+      baseGradient.addColorStop(0.25, '#E9E5DE');
+      baseGradient.addColorStop(0.5, '#E3DFD8');
+      baseGradient.addColorStop(0.75, '#DFDAD3');
+      baseGradient.addColorStop(1, '#DCD6CF');
       ctx.fillStyle = baseGradient;
       ctx.fillRect(0, 0, 1024, 1024);
       
-      // Subtle warm marble veining (light and elegant)
+      // Enhanced warm marble veining (+15% visibility)
       ctx.globalCompositeOperation = 'multiply';
       for (let i = 0; i < 15; i++) {
-        ctx.strokeStyle = `rgba(200, 190, 175, ${0.06 + Math.random() * 0.06})`;
+        ctx.strokeStyle = `rgba(200, 190, 175, ${0.07 + Math.random() * 0.08})`;
         ctx.lineWidth = 1 + Math.random() * 1.5;
         ctx.beginPath();
         ctx.moveTo(Math.random() * 1024, 0);
@@ -176,16 +176,16 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
 
 const TileGrid = () => {
   const tiles = useMemo(() => {
-    // Warm beige marble palette with orange accent glow
+    // Darker warm marble palette with enhanced orange accent
     const colors = [
-      '#F5F4F2', // Primary: Light beige marble
-      '#E7E3DD', // Secondary: Soft stone gray
-      '#F5F4F2', // Primary repeated
-      '#E7E3DD', // Secondary repeated
-      '#F5F4F2', // Primary repeated
-      '#E7E3DD', // Secondary repeated
-      'rgba(232, 117, 43, 0.08)', // Accent: Orange glow (tile 7)
-      '#F5F4F2', // Primary
+      '#E9E5DE', // Primary: Darker beige marble
+      '#DCD6CF', // Secondary: Warm neutral gray
+      '#E9E5DE', // Primary repeated
+      '#DCD6CF', // Secondary repeated
+      '#E9E5DE', // Primary repeated
+      '#DCD6CF', // Secondary repeated
+      'rgba(232, 117, 43, 0.10)', // Accent: Orange glow (tile 7, 10% opacity)
+      '#E9E5DE', // Primary
     ];
     const diagonalAngle = (15 * Math.PI) / 180; // 15 degrees
     
@@ -285,11 +285,11 @@ export const Hero3DAnimation = () => {
         {/* HDRI Environment for realistic reflections */}
         <Environment preset="studio" />
         
-        {/* Premium warm white lighting setup for natural marble appearance */}
-        <ambientLight intensity={0.5} color="#FFFAF5" />
+        {/* Reduced lighting intensity (-5%) for better depth and contrast */}
+        <ambientLight intensity={0.475} color="#FFFAF5" />
         <directionalLight
           position={[-12, 15, 10]}
-          intensity={1.3}
+          intensity={1.235}
           castShadow
           shadow-mapSize={[4096, 4096]}
           shadow-camera-far={50}
@@ -303,18 +303,18 @@ export const Hero3DAnimation = () => {
         />
         <directionalLight 
           position={[8, -4, -5]} 
-          intensity={0.3} 
+          intensity={0.285} 
           color="#FFF9F0" 
         />
         <pointLight 
           position={[-8, 8, 12]} 
-          intensity={0.35} 
+          intensity={0.3325} 
           distance={35} 
           color="#FFFCF7"
           castShadow
         />
         <hemisphereLight 
-          args={['#FFFCF7', '#E7E3DD', 0.4]} 
+          args={['#FFFCF7', '#DCD6CF', 0.38]} 
         />
 
         {/* Tiles */}
