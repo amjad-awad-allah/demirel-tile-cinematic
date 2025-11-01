@@ -157,6 +157,29 @@ All colors MUST be HSL.
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   }
 
+  /* Elegant cursor interactions for premium feel */
+  .cursor-orange-hover {
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .cursor-orange-hover::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #E8752B;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 9999;
+  }
+  
+  .cursor-orange-hover:hover::after {
+    opacity: 0.6;
+  }
+
   .scroll-fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -210,5 +233,15 @@ All colors MUST be HSL.
   .fade-bottom.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  /* Breathing animation for quote marks */
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.05); opacity: 0.25; }
+  }
+  
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
   }
 }

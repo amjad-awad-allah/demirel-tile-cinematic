@@ -85,15 +85,16 @@ export const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/2">
                 <div 
-                  className="p-8 h-full bg-white rounded-lg transition-all duration-300 hover:shadow-xl"
+                  className="p-8 h-full bg-white rounded-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                   style={{
                     border: '1px solid #E0DED9',
+                    boxShadow: '0 3px 10px rgba(0, 0, 0, 0.03)'
                   }}
                 >
-                  {/* Golden quotation mark */}
+                  {/* Orange quotation mark with breathing animation */}
                   <Quote 
-                    className="w-10 h-10 mb-4"
-                    style={{ color: '#C18F59' }}
+                    className="w-12 h-12 mb-4 animate-breathe"
+                    style={{ color: '#E8752B' }}
                   />
                   
                   <p 
@@ -107,17 +108,17 @@ export const Testimonials = () => {
                     "{testimonial.text}"
                   </p>
                   
-                  {/* Golden divider */}
+                  {/* Orange divider */}
                   <div 
                     className="w-12 h-0.5 mb-4"
-                    style={{ backgroundColor: '#C18F59' }}
+                    style={{ backgroundColor: '#E8752B' }}
                   ></div>
                   
                   {/* Avatar and name */}
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-12 h-12 rounded-full flex items-center justify-center font-semibold text-white"
-                      style={{ backgroundColor: '#C18F59' }}
+                      style={{ backgroundColor: '#E8752B' }}
                     >
                       {testimonial.initials}
                     </div>

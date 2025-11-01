@@ -237,6 +237,7 @@ export const Hero3DAnimation = () => {
         camera={{ position: [0, 0, 18], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
+        shadows
       >
         <color attach="background" args={['#f8f9fa']} />
         

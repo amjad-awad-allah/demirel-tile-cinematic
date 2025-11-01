@@ -1,0 +1,31 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #1e3a5f } 
+		.s1 { fill: #ff6b35 } 
+		.s2 { opacity: .82;fill: #3d5a80 } 
+		.t3 { font-size: 80px;fill: #1e3a5f;font-family: "Arial" } 
+		.t4 { font-size: 62px;fill: #3d5a80;font-family: "Arial" } 
+		.t5 { font-size: 23px;fill: #2a4568;font-family: "Arial" } 
+	</style>
+	<g>
+		<path fill-rule="evenodd" class="s0" d="m41.15 93.59l167.56-29.55 29.54 167.56-167.55 29.54z"/>
+		<path fill-rule="evenodd" class="s1" d="m167.92 32.44l167.56 29.55-29.55 167.55-167.55-29.54z"/>
+		<path fill-rule="evenodd" class="s2" d="m278.25 126.13v170.14h-170.14v-170.14z"/>
+	</g>
+	<g>
+		<text id="FLIESEN" style="transform: matrix(2.431,0,0,2.431,394.917,162.591)" >
+			<tspan x="0" y="0" class="t3">FLIESEN
+</tspan>
+		</text>
+		<text id="Demirel" style="transform: matrix(2.431,0,0,2.431,407.07,344.886)" >
+			<tspan x="0" y="0" class="t4">Demirel
+</tspan>
+		</text>
+		<path fill-rule="evenodd" class="s1" d="m398.56 393.5h478.83c2.01 0 3.65 1.63 3.65 3.64 0 2.02-1.64 3.65-3.65 3.65h-478.83c-2.01 0-3.64-1.63-3.64-3.65 0-2.01 1.63-3.64 3.64-3.64z"/>
+		<text id="MEISTERBETRIEB" style="transform: matrix(2.431,0,0,2.431,394.917,478.569)" >
+			<tspan x="0" y="0" class="t5">MEISTERBETRIEB
+</tspan>
+		</text>
+	</g>
+</svg>
