@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 import logo from '@/assets/logo-transparent.svg';
 
 export const Footer = () => {
@@ -12,10 +12,16 @@ export const Footer = () => {
     }
   };
 
+  const socialLinks = [
+    { icon: Facebook, url: 'https://facebook.com', label: 'Facebook' },
+    { icon: Instagram, url: 'https://instagram.com', label: 'Instagram' },
+    { icon: Linkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
+  ];
+
   return (
     <footer className="bg-primary text-primary-foreground py-12">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-12 mb-8">
+        <div className="grid md:grid-cols-4 gap-12 mb-8">
           {/* Logo & About */}
           <div>
             <img src={logo} alt="Fliesen Demirel" className="h-16 w-auto mb-4" />
@@ -98,6 +104,27 @@ export const Footer = () => {
                 </span>
               </li>
             </ul>
+          </div>
+
+          {/* Social Media */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">
+              {t('language') === 'de' ? 'Folgen Sie uns' : 'Follow Us'}
+            </h3>
+            <div className="flex gap-4">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-primary-foreground/10 hover:bg-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 

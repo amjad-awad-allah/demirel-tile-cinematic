@@ -4,6 +4,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Footer } from '@/components/Footer';
+import { WhyUs } from '@/components/WhyUs';
+import { Portfolio } from '@/components/Portfolio';
+import { Testimonials } from '@/components/Testimonials';
+import { FAQ } from '@/components/FAQ';
+import { QuickQuote } from '@/components/QuickQuote';
+import { MapSection } from '@/components/MapSection';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import logo from '@/assets/logo-transparent.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
@@ -100,13 +106,19 @@ const Home = () => {
           <Button 
             onClick={scrollToContact}
             size="lg" 
-            className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300"
+            className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300 relative overflow-hidden"
           >
-            {t('heroButton')}
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            <span className="relative z-10 flex items-center">
+              {t('heroButton')}
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </span>
+            <span className="absolute inset-0 bg-gradient-to-r from-accent to-[hsl(var(--accent-hover))] opacity-0 group-hover:opacity-100 transition-opacity"></span>
           </Button>
         </div>
       </section>
+
+      {/* Why Us Section */}
+      <WhyUs />
 
       {/* Services Section */}
       <section id="services" className="py-24 bg-background">
@@ -156,6 +168,12 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Portfolio Section */}
+      <Portfolio />
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
       {/* About Section */}
       <section id="about" className="py-24 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
@@ -183,6 +201,12 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Quick Quote Section */}
+      <QuickQuote />
+
+      {/* FAQ Section */}
+      <FAQ />
 
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-background">
@@ -228,6 +252,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Map Section */}
+      <MapSection />
 
       <Footer />
     </div>
