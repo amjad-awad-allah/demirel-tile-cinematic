@@ -5,11 +5,13 @@ interface Tile {
   y: number;
   delay: number;
   pattern: number;
+  floatOffset: number;
+  floatSpeed: number;
 }
 
 export const HeroTileAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [animationPhase, setAnimationPhase] = useState<'assembling' | 'morphing' | 'logo' | 'transitioning'>('assembling');
+  const [animationPhase, setAnimationPhase] = useState<'assembling' | 'floating'>('assembling');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,113 +24,112 @@ export const HeroTileAnimation = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const tileSize = 80;
+    const tileSize = 150; // Much larger tiles
     const cols = Math.ceil(canvas.width / tileSize) + 1;
     const rows = Math.ceil(canvas.height / tileSize) + 1;
 
     const tiles: Tile[] = [];
+    let delayCounter = 0;
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         tiles.push({
           x: x * tileSize,
           y: y * tileSize,
-          delay: Math.random() * 1000,
-          pattern: Math.floor(Math.random() * 4),
+          delay: delayCounter * 40, // Sequential animation
+          pattern: Math.floor(Math.random() * 5),
+          floatOffset: Math.random() * Math.PI * 2,
+          floatSpeed: 0.5 + Math.random() * 0.5,
         });
+        delayCounter++;
       }
     }
 
-    // Realistic ceramic tile colors: marble, terrazzo, concrete, wood
-    const colors = ['#f5f5f0', '#e8e6e3', '#d4d2c8', '#c9b8a3', '#f0ebe5', '#e5dfd8'];
+    // Colors from the logo: dark blue, orange, blue-grey, variations
+    const colors = ['#1e3a5f', '#ff6b35', '#3d5a80', '#2a4568', '#34495e', '#e67e22'];
     let startTime = Date.now();
 
-    const drawTile = (tile: Tile, progress: number) => {
+    const drawTile = (tile: Tile, progress: number, time: number = 0) => {
       const scale = Math.min(progress, 1);
       const size = tileSize * scale;
       const offset = (tileSize - size) / 2;
 
+      // Floating animation after assembly
+      const floatY = animationPhase === 'floating' 
+        ? Math.sin(time * 0.001 * tile.floatSpeed + tile.floatOffset) * 3 
+        : 0;
+
+      ctx.save();
+      ctx.translate(0, floatY);
+
       ctx.fillStyle = colors[tile.pattern];
       ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
 
-      // Grout lines (darker, more realistic)
-      if (scale > 0.5) {
-        ctx.strokeStyle = '#BDC3C7';
-        ctx.lineWidth = 3;
+      // Grout lines (darker, more prominent)
+      if (scale > 0.3) {
+        ctx.strokeStyle = '#1A1E24';
+        ctx.lineWidth = 4;
         ctx.strokeRect(tile.x + offset, tile.y + offset, size, size);
       }
 
-      // Ceramic shine and reflection
-      if (scale === 1) {
+      // Glossy shine effect
+      if (scale > 0.7) {
         const gradient = ctx.createLinearGradient(
           tile.x,
           tile.y,
+          tile.x + tileSize * 0.3,
+          tile.y + tileSize * 0.3
+        );
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(tile.x + offset, tile.y + offset, size * 0.6, size * 0.6);
+      }
+
+      // Subtle shadow
+      if (scale === 1) {
+        const shadowGradient = ctx.createLinearGradient(
+          tile.x,
+          tile.y + tileSize * 0.7,
           tile.x,
           tile.y + tileSize
         );
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
-        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.05)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
+        shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        shadowGradient.addColorStop(1, 'rgba(0, 0, 0, 0.15)');
+        ctx.fillStyle = shadowGradient;
+        ctx.fillRect(tile.x + offset, tile.y + offset + size * 0.7, size, size * 0.3);
       }
+
+      ctx.restore();
     };
 
     const animate = () => {
-      const elapsed = Date.now() - startTime;
+      const currentTime = Date.now();
+      const elapsed = currentTime - startTime;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#1A1E24';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (animationPhase === 'assembling') {
+        let allComplete = true;
         tiles.forEach((tile) => {
-          const tileProgress = Math.max(0, (elapsed - tile.delay) / 800);
+          const tileProgress = Math.max(0, Math.min(1, (elapsed - tile.delay) / 600));
+          if (tileProgress < 1) allComplete = false;
           if (tileProgress > 0) {
-            drawTile(tile, tileProgress);
+            drawTile(tile, tileProgress, currentTime);
           }
         });
 
-        if (elapsed > 2000) {
-          setTimeout(() => setAnimationPhase('morphing'), 500);
+        // Switch to floating phase when all tiles are assembled
+        if (allComplete && elapsed > tiles[tiles.length - 1].delay + 600) {
+          setAnimationPhase('floating');
         }
-      } else if (animationPhase === 'morphing') {
-        // Draw complete grid
-        tiles.forEach((tile) => drawTile(tile, 1));
-
-        // Fade to logo
-        const fadeProgress = Math.min((elapsed - 2500) / 1000, 1);
-        ctx.globalAlpha = fadeProgress;
-        ctx.fillStyle = '#1A1E24';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.globalAlpha = 1;
-
-        if (elapsed > 3500) {
-          setAnimationPhase('logo');
-        }
-      } else if (animationPhase === 'logo') {
-        // Show pure background for logo
-        ctx.fillStyle = '#1A1E24';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        if (elapsed > 5000) {
-          setAnimationPhase('transitioning');
-          startTime = Date.now(); // Reset timer
-        }
-      } else if (animationPhase === 'transitioning') {
-        // Fade back to tiles
-        const fadeProgress = Math.min(elapsed / 800, 1);
-        
-        tiles.forEach((tile) => drawTile(tile, 1));
-        
-        ctx.globalAlpha = 1 - fadeProgress;
-        ctx.fillStyle = '#1A1E24';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.globalAlpha = 1;
-
-        if (elapsed > 800) {
-          setAnimationPhase('assembling');
-          startTime = Date.now();
-        }
+      } else if (animationPhase === 'floating') {
+        // Keep tiles visible and floating
+        tiles.forEach((tile) => {
+          drawTile(tile, 1, currentTime);
+        });
       }
 
       requestAnimationFrame(animate);
