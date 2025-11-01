@@ -13,13 +13,15 @@ interface TileData {
   color: string;
   spawnTime: number;
   floatOffset: number;
+  scrollAtSpawn: number;
 }
 
 interface TileProps {
   data: TileData;
+  scrollRef: { current: number };
 }
 
-const Tile = ({ data }: TileProps) => {
+const Tile = ({ data, scrollRef }: TileProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
@@ -27,25 +29,31 @@ const Tile = ({ data }: TileProps) => {
 
     const elapsed = state.clock.getElapsedTime();
     const timeSinceSpawn = elapsed - data.spawnTime;
-    
+
+    // Convert pixel scroll to world units
+    const ratio = state.viewport.height / state.size.height; // world units per pixel
+    const scrollOffsetY = (data.scrollAtSpawn - scrollRef.current) * ratio;
+
     // Animation phase: falling (2 seconds)
     const fallDuration = 2;
     const progress = Math.min(timeSinceSpawn / fallDuration, 1);
     const easeProgress = 1 - Math.pow(1 - progress, 3); // ease out cubic
 
+    let x = 0, y = 0, z = 0;
+
     if (progress < 1) {
       // Falling animation
-      meshRef.current.position.x = THREE.MathUtils.lerp(
+      x = THREE.MathUtils.lerp(
         data.startPosition[0],
         data.targetPosition[0],
         easeProgress
       );
-      meshRef.current.position.y = THREE.MathUtils.lerp(
+      y = THREE.MathUtils.lerp(
         data.startPosition[1],
         data.targetPosition[1],
         easeProgress
       );
-      meshRef.current.position.z = THREE.MathUtils.lerp(
+      z = THREE.MathUtils.lerp(
         data.startPosition[2],
         data.targetPosition[2],
         easeProgress
@@ -56,17 +64,20 @@ const Tile = ({ data }: TileProps) => {
       meshRef.current.rotation.y = data.rotation[1] * (1 - easeProgress) * Math.PI * 2;
       meshRef.current.rotation.z = data.rotation[2] * (1 - easeProgress);
     } else {
-      // Very subtle floating animation after landing - stays in fixed position
+      // Very subtle floating animation after landing - stays in fixed position (page-anchored)
       const floatTime = elapsed + data.floatOffset;
-      meshRef.current.position.x = data.targetPosition[0] + Math.sin(floatTime * 0.3) * 0.08;
-      meshRef.current.position.y = data.targetPosition[1] + Math.sin(floatTime * 0.4) * 0.06;
-      meshRef.current.position.z = data.targetPosition[2] + Math.cos(floatTime * 0.35) * 0.08;
-      
+      x = data.targetPosition[0] + Math.sin(floatTime * 0.3) * 0.08;
+      y = data.targetPosition[1] + Math.sin(floatTime * 0.4) * 0.06;
+      z = data.targetPosition[2] + Math.cos(floatTime * 0.35) * 0.08;
+
       // Very gentle rotation while floating
       meshRef.current.rotation.x = Math.sin(floatTime * 0.15) * 0.02;
       meshRef.current.rotation.y = Math.cos(floatTime * 0.18) * 0.02;
       meshRef.current.rotation.z = Math.sin(floatTime * 0.12) * 0.015;
     }
+
+    // Apply page anchoring offset so tiles stick to their drop location on the page
+    meshRef.current.position.set(x, y + scrollOffsetY, z);
   });
 
   return (
@@ -105,6 +116,7 @@ export const Hero3DAnimation = () => {
   const [tiles, setTiles] = useState<TileData[]>([]);
   const lastScrollY = useRef(0);
   const lastSpawnTime = useRef(0);
+  const scrollRef = useRef(0);
 
   const spawnTiles = (count: number, currentTime: number) => {
     const newTiles: TileData[] = [];
@@ -136,6 +148,7 @@ export const Hero3DAnimation = () => {
         color,
         spawnTime: currentTime,
         floatOffset: Math.random() * Math.PI * 2,
+        scrollAtSpawn: lastScrollY.current,
       });
     }
 
@@ -144,7 +157,10 @@ export const Hero3DAnimation = () => {
 
   useEffect(() => {
     // Initial spawn
-    spawnTiles(8, 0);
+    const initial = window.scrollY;
+    lastScrollY.current = initial;
+    scrollRef.current = initial;
+    spawnTiles(8, performance.now() / 1000);
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -152,6 +168,7 @@ export const Hero3DAnimation = () => {
       const now = performance.now() / 1000;
 
       lastScrollY.current = currentScrollY;
+      scrollRef.current = currentScrollY;
 
       // Throttle spawning
       if (now - lastSpawnTime.current < 0.15) return;
@@ -186,7 +203,7 @@ export const Hero3DAnimation = () => {
       >
         {Lights}
         {tiles.map((tile) => (
-          <Tile key={tile.id} data={tile} />
+          <Tile key={tile.id} data={tile} scrollRef={scrollRef} />
         ))}
       </Canvas>
     </div>
