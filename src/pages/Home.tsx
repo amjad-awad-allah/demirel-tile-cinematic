@@ -3,6 +3,8 @@ import { HeroTileAnimation } from '@/components/HeroTileAnimation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Footer } from '@/components/Footer';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import logo from '@/assets/logo-transparent.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
 import bathroomTiles from '@/assets/bathroom-tiles.jpg';
@@ -10,6 +12,11 @@ import kitchenTiles from '@/assets/kitchen-tiles.jpg';
 
 const Home = () => {
   const { t } = useLanguage();
+
+  // Scroll animations for different sections
+  const servicesTitle = useScrollAnimation();
+  const aboutTitle = useScrollAnimation();
+  const contactTitle = useScrollAnimation();
 
   const services = [
     {
@@ -107,38 +114,47 @@ const Home = () => {
       {/* Services Section */}
       <section id="services" className="py-24 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
-            {t('servicesTitle')}
-          </h2>
-          <p className="text-center text-muted-foreground mb-16 text-lg max-w-2xl mx-auto">
-            {t('servicesSubtitle')}
-          </p>
+          <div ref={servicesTitle.ref} className={`scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+              {t('servicesTitle')}
+            </h2>
+            <p className="text-center text-muted-foreground mb-16 text-lg max-w-2xl mx-auto">
+              {t('servicesSubtitle')}
+            </p>
+          </div>
 
           <div className="space-y-24">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className={`flex flex-col ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                } gap-12 items-center`}
-              >
-                <div className="flex-1">
-                  <div className="relative overflow-hidden rounded-lg aspect-[4/3] shadow-elegant">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
+            {services.map((service, index) => {
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              const animation = useScrollAnimation(0.2);
+              return (
+                <div
+                  key={index}
+                  ref={animation.ref}
+                  className={`flex flex-col ${
+                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  } gap-12 items-center ${
+                    index % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'
+                  } ${animation.isVisible ? 'visible' : ''}`}
+                >
+                  <div className="flex-1">
+                    <div className="relative overflow-hidden rounded-lg aspect-[4/3] shadow-elegant">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl md:text-4xl font-bold mb-4">{service.title}</h3>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4">{service.title}</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -146,10 +162,12 @@ const Home = () => {
       {/* About Section */}
       <section id="about" className="py-24 bg-card">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient">
-            {t('aboutTitle')}
-          </h2>
-          <div className="prose prose-lg mx-auto text-muted-foreground">
+          <div ref={aboutTitle.ref} className={`scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient">
+              {t('aboutTitle')}
+            </h2>
+          </div>
+          <div className={`prose prose-lg mx-auto text-muted-foreground scroll-scale ${aboutTitle.isVisible ? 'visible' : ''}`}>
             <p className="text-lg leading-relaxed mb-6">
               {t('language') === 'de' 
                 ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Berlin und Umgebung. Mit über 20 Jahren Erfahrung vereinen wir traditionelles Handwerk mit modernen Techniken.'
@@ -172,19 +190,22 @@ const Home = () => {
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-background">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
-            {t('contactTitle')}
-          </h2>
-          <p className="text-center text-muted-foreground mb-16 text-xl">
-            {t('contactSubtitle')}
-          </p>
+          <div ref={contactTitle.ref} className={`scroll-fade-in ${contactTitle.isVisible ? 'visible' : ''}`}>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+              {t('contactTitle')}
+            </h2>
+            <p className="text-center text-muted-foreground mb-16 text-xl">
+              {t('contactSubtitle')}
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className={`grid md:grid-cols-2 gap-6 scroll-scale ${contactTitle.isVisible ? 'visible' : ''}`}>
             {contactInfo.map((item, index) => (
               <Card
                 key={index}
                 className="p-6 hover-lift cursor-pointer border-2 hover:border-accent transition-colors"
                 onClick={() => window.open(item.href, item.icon === Globe ? '_blank' : '_self')}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-accent/10 rounded-lg">
@@ -210,6 +231,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
