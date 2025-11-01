@@ -88,9 +88,15 @@ const Home = () => {
             />
           </div>
           
-          {/* Semi-transparent overlay behind text */}
+          {/* Semi-transparent overlay behind text with golden border */}
           <div className="relative">
-            <div className="absolute inset-0 -m-8 bg-white/40 backdrop-blur-sm rounded-3xl shadow-lg"></div>
+            <div 
+              className="absolute inset-0 -m-8 bg-white/40 backdrop-blur-sm rounded-3xl"
+              style={{
+                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.08)',
+                borderTop: '2px solid #C18F59'
+              }}
+            ></div>
             
             <div className="relative">
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-primary animate-fade-in drop-shadow-lg">

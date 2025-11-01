@@ -23,42 +23,52 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
   }, [position]);
 
   useEffect(() => {
-    // Create marble/stone texture
+    // Create refined marble/stone texture with subtle details
     const canvas = document.createElement('canvas');
     canvas.width = 512;
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Base stone color
+      // Base stone gradient (#EAE8E3 → #D9D6CF)
       const gradient = ctx.createLinearGradient(0, 0, 512, 512);
-      gradient.addColorStop(0, '#F3F2EE');
-      gradient.addColorStop(0.5, '#E8E5DE');
-      gradient.addColorStop(1, '#D9D6CF');
+      gradient.addColorStop(0, '#EAE8E3');
+      gradient.addColorStop(0.4, '#E0DED9');
+      gradient.addColorStop(0.7, '#D9D6CF');
+      gradient.addColorStop(1, '#D5D3CE');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, 512, 512);
       
-      // Add marble veins
-      ctx.strokeStyle = 'rgba(180, 175, 165, 0.15)';
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 8; i++) {
+      // Add elegant marble veins (subtle and natural)
+      ctx.strokeStyle = 'rgba(170, 165, 155, 0.12)';
+      ctx.lineWidth = 1.5;
+      for (let i = 0; i < 12; i++) {
         ctx.beginPath();
         ctx.moveTo(Math.random() * 512, 0);
         ctx.bezierCurveTo(
-          Math.random() * 512, Math.random() * 512,
-          Math.random() * 512, Math.random() * 512,
+          Math.random() * 512, Math.random() * 256,
+          Math.random() * 512, Math.random() * 256 + 256,
           Math.random() * 512, 512
         );
         ctx.stroke();
       }
       
-      // Add subtle stone texture
-      for (let i = 0; i < 2000; i++) {
+      // Add fine marble texture (10-20% opacity effect)
+      for (let i = 0; i < 3000; i++) {
         const x = Math.random() * 512;
         const y = Math.random() * 512;
-        const brightness = Math.random() * 20 + 220;
-        ctx.fillStyle = `rgba(${brightness}, ${brightness - 5}, ${brightness - 10}, 0.3)`;
+        const brightness = Math.random() * 15 + 225;
+        ctx.fillStyle = `rgba(${brightness}, ${brightness - 3}, ${brightness - 6}, 0.15)`;
         ctx.fillRect(x, y, 1, 1);
+      }
+      
+      // Add occasional darker speckles for stone realism
+      for (let i = 0; i < 100; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        const size = Math.random() * 2 + 1;
+        ctx.fillStyle = 'rgba(180, 175, 170, 0.2)';
+        ctx.fillRect(x, y, size, size);
       }
       
       const canvasTexture = new THREE.CanvasTexture(canvas);
@@ -99,17 +109,28 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       meshRef.current.rotation.y = THREE.MathUtils.lerp(Math.PI * 2, rotation[1], eased);
       meshRef.current.rotation.z = THREE.MathUtils.lerp(Math.PI, rotation[2], eased);
     } else {
-      // Slow floating animation after entrance (25s cycle)
-      const floatTime = (elapsed - delay - entranceDuration) * 0.04;
-      const floatOffset = Math.sin(floatTime + delay) * 0.3;
+      // Slow floating animation after entrance (20s cycle)
+      const floatTime = (elapsed - delay - entranceDuration) * 0.05; // 20s cycle
+      
+      // Vertical movement: ±5px equivalent (±0.3 units)
+      const floatOffset = Math.sin(floatTime + delay * 2) * 0.3;
       meshRef.current.position.y = position[1] + floatOffset;
       
-      // Very gentle rotation (30s cycle)
-      const rotationTime = (elapsed - delay - entranceDuration) * 0.033;
-      meshRef.current.rotation.z = rotation[2] + Math.sin(rotationTime + delay) * 0.08;
-      meshRef.current.rotation.x = rotation[0] + Math.cos(rotationTime * 0.7 + delay) * 0.05;
+      // Subtle Y-axis rotation: 0-8° (0-0.14 radians)
+      const rotationRange = 0.14; // ~8 degrees
+      const yRotation = Math.sin(floatTime * 0.8 + delay) * rotationRange;
+      meshRef.current.rotation.y = rotation[1] + yRotation;
+      
+      // Very subtle X-axis tilt
+      const xRotation = Math.cos(floatTime * 0.6 + delay * 1.5) * 0.05;
+      meshRef.current.rotation.x = rotation[0] + xRotation;
+      
+      meshRef.current.rotation.z = rotation[2];
     }
   });
+
+  // Calculate depth-based opacity for blur effect on far tiles
+  const depthOpacity = 1 - Math.abs(position[2]) * 0.08;
 
   return (
     <mesh ref={meshRef} position={initialPosition} castShadow receiveShadow>
@@ -117,9 +138,11 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       <meshStandardMaterial
         map={texture}
         color={color}
-        roughness={0.4}
-        metalness={0.1}
-        envMapIntensity={0.8}
+        roughness={0.5}
+        metalness={0.05}
+        envMapIntensity={0.7}
+        transparent={true}
+        opacity={Math.max(0.75, depthOpacity)}
       />
     </mesh>
   );
@@ -127,7 +150,7 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
 
 const TileGrid = () => {
   const tiles = useMemo(() => {
-    const colors = ['#D9D6CF', '#E8E5DE', '#F3F2EE'];
+    const colors = ['#EAE8E3', '#E0DED9', '#D9D6CF', '#D5D3CE'];
     const diagonalAngle = (15 * Math.PI) / 180; // 15 degrees
     
     return [
@@ -141,50 +164,50 @@ const TileGrid = () => {
       {
         position: [3, 3, -1] as [number, number, number],
         rotation: [-0.05, 0.05, diagonalAngle] as [number, number, number],
-        delay: 0.3,
+        delay: 0.4,
         color: colors[1],
         size: [5, 5, 0.3] as [number, number, number],
       },
       {
         position: [-2, -3, 0] as [number, number, number],
         rotation: [0.08, -0.08, diagonalAngle] as [number, number, number],
-        delay: 0.6,
+        delay: 0.8,
         color: colors[2],
         size: [4.5, 5.5, 0.3] as [number, number, number],
       },
       {
         position: [5, -2, 1] as [number, number, number],
         rotation: [-0.1, 0.1, diagonalAngle] as [number, number, number],
-        delay: 0.9,
+        delay: 1.2,
         color: colors[0],
         size: [5, 4, 0.3] as [number, number, number],
       },
       {
         position: [0, 0, -3] as [number, number, number],
         rotation: [0.05, -0.05, diagonalAngle] as [number, number, number],
-        delay: 1.2,
-        color: colors[1],
+        delay: 1.6,
+        color: colors[3],
         size: [6, 4.5, 0.3] as [number, number, number],
       },
       {
         position: [-5, -1, 2] as [number, number, number],
         rotation: [-0.08, 0.08, diagonalAngle] as [number, number, number],
-        delay: 1.5,
+        delay: 2.0,
         color: colors[2],
         size: [4, 5, 0.3] as [number, number, number],
       },
       {
         position: [2, -4, -1] as [number, number, number],
         rotation: [0.1, -0.1, diagonalAngle] as [number, number, number],
-        delay: 1.8,
-        color: colors[0],
+        delay: 2.4,
+        color: colors[1],
         size: [5.5, 4.5, 0.3] as [number, number, number],
       },
       {
         position: [-3, 4, 1] as [number, number, number],
         rotation: [-0.05, 0.08, diagonalAngle] as [number, number, number],
-        delay: 2.1,
-        color: colors[2],
+        delay: 2.8,
+        color: colors[3],
         size: [4.5, 5, 0.3] as [number, number, number],
       },
     ];
@@ -217,11 +240,11 @@ export const Hero3DAnimation = () => {
       >
         <color attach="background" args={['#f8f9fa']} />
         
-        {/* Enhanced Lighting for realistic depth */}
-        <ambientLight intensity={0.6} color="#ffffff" />
+        {/* Refined Lighting: soft directional from top-left with gentle shadows */}
+        <ambientLight intensity={0.5} color="#ffffff" />
         <directionalLight
-          position={[8, 10, 6]}
-          intensity={1.2}
+          position={[-10, 12, 8]}
+          intensity={1.0}
           castShadow
           shadow-mapSize={[2048, 2048]}
           shadow-camera-far={50}
@@ -229,11 +252,12 @@ export const Hero3DAnimation = () => {
           shadow-camera-right={20}
           shadow-camera-top={20}
           shadow-camera-bottom={-20}
-          color="#fff5e6"
+          shadow-bias={-0.0001}
+          color="#fffbf5"
         />
-        <directionalLight position={[-8, -5, -4]} intensity={0.5} color="#e8f4ff" />
-        <pointLight position={[0, 0, 10]} intensity={0.4} distance={30} color="#ffffff" />
-        <hemisphereLight args={['#ffffff', '#b0a8a0', 0.3]} />
+        <directionalLight position={[5, -3, -4]} intensity={0.3} color="#f5f3ef" />
+        <pointLight position={[-5, 5, 10]} intensity={0.35} distance={30} color="#ffffff" />
+        <hemisphereLight args={['#ffffff', '#d9d6cf', 0.4]} />
 
         {/* Tiles */}
         <TileGrid />
