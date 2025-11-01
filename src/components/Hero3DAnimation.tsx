@@ -56,16 +56,16 @@ const Tile = ({ data }: TileProps) => {
       meshRef.current.rotation.y = data.rotation[1] * (1 - easeProgress) * Math.PI * 2;
       meshRef.current.rotation.z = data.rotation[2] * (1 - easeProgress);
     } else {
-      // Floating animation after landing
+      // Very subtle floating animation after landing - stays in fixed position
       const floatTime = elapsed + data.floatOffset;
-      meshRef.current.position.x = data.targetPosition[0] + Math.sin(floatTime * 0.5) * 0.2;
-      meshRef.current.position.y = data.targetPosition[1] + Math.sin(floatTime * 0.3) * 0.15;
-      meshRef.current.position.z = data.targetPosition[2] + Math.cos(floatTime * 0.4) * 0.2;
+      meshRef.current.position.x = data.targetPosition[0] + Math.sin(floatTime * 0.3) * 0.08;
+      meshRef.current.position.y = data.targetPosition[1] + Math.sin(floatTime * 0.4) * 0.06;
+      meshRef.current.position.z = data.targetPosition[2] + Math.cos(floatTime * 0.35) * 0.08;
       
-      // Gentle rotation while floating
-      meshRef.current.rotation.x = Math.sin(floatTime * 0.2) * 0.05;
-      meshRef.current.rotation.y = Math.cos(floatTime * 0.25) * 0.05;
-      meshRef.current.rotation.z = Math.sin(floatTime * 0.15) * 0.03;
+      // Very gentle rotation while floating
+      meshRef.current.rotation.x = Math.sin(floatTime * 0.15) * 0.02;
+      meshRef.current.rotation.y = Math.cos(floatTime * 0.18) * 0.02;
+      meshRef.current.rotation.z = Math.sin(floatTime * 0.12) * 0.015;
     }
   });
 
