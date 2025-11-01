@@ -29,16 +29,18 @@ export const HeroTileAnimation = () => {
     const cols = Math.ceil(canvas.width / tileSize) + 1;
     const rows = Math.ceil(canvas.height / tileSize) + 1;
 
-    // Ceramic and tile colors: marble whites/greys, wood tones, terrazzo
+    // Ceramic tiles - white and grey, majority white
     const colors = [
-      { base: '#f5f5f0', pattern: 'marble' },      // White marble
-      { base: '#e8e6e3', pattern: 'solid' },        // Light grey
-      { base: '#d4d2c8', pattern: 'terrazzo' },     // Beige terrazzo
-      { base: '#c9b8a3', pattern: 'wood' },         // Light wood
-      { base: '#8b7355', pattern: 'wood' },         // Medium wood
-      { base: '#a89f91', pattern: 'solid' },        // Taupe
-      { base: '#f0ebe5', pattern: 'marble' },       // Cream marble
-      { base: '#5d4e37', pattern: 'wood' },         // Dark wood
+      { base: '#ffffff', pattern: 'solid' },        // Pure white
+      { base: '#fefefe', pattern: 'solid' },        // Off white
+      { base: '#f9f9f9', pattern: 'solid' },        // Very light white
+      { base: '#f5f5f5', pattern: 'marble' },       // White with marble
+      { base: '#f0f0f0', pattern: 'solid' },        // Light white
+      { base: '#ffffff', pattern: 'marble' },       // White marble
+      { base: '#e8e8e8', pattern: 'solid' },        // Very light grey
+      { base: '#d9d9d9', pattern: 'solid' },        // Light grey
+      { base: '#cccccc', pattern: 'solid' },        // Medium grey
+      { base: '#f7f7f7', pattern: 'solid' },        // Almost white
     ];
 
     const tiles: Tile[] = [];
@@ -91,9 +93,9 @@ export const HeroTileAnimation = () => {
       ctx.fillStyle = baseColor;
       ctx.fillRect(x, y, size, size);
       
-      // Marble veins - using seed for consistency
-      ctx.strokeStyle = 'rgba(180, 180, 180, 0.3)';
-      ctx.lineWidth = 2;
+      // Subtle marble veins in light grey - using seed for consistency
+      ctx.strokeStyle = 'rgba(200, 200, 200, 0.25)';
+      ctx.lineWidth = 1.5;
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
         ctx.moveTo(x + seededRandom(seed, i) * size, y);
@@ -140,21 +142,17 @@ export const HeroTileAnimation = () => {
       const tileColor = colors[tile.pattern];
       
       // Draw tile with pattern based on type - using tile.seed for consistency
-      if (tileColor.pattern === 'wood') {
-        drawWoodGrain(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
-      } else if (tileColor.pattern === 'marble') {
+      if (tileColor.pattern === 'marble') {
         drawMarble(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
-      } else if (tileColor.pattern === 'terrazzo') {
-        drawTerrazzo(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
       } else {
         ctx.fillStyle = tileColor.base;
         ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
       }
 
-      // Grout lines
+      // Grout lines - subtle grey for white tiles
       if (scale > 0.3) {
-        ctx.strokeStyle = '#9e9e9e';
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#d0d0d0';
+        ctx.lineWidth = 2.5;
         ctx.strokeRect(tile.x + offset, tile.y + offset, size, size);
       }
 
