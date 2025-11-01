@@ -75,10 +75,12 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Background Animation for entire site */}
+      <Hero3DAnimation />
+      
       {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
-        <Hero3DAnimation />
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background z-10">
         
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="mb-12 animate-fade-in">
@@ -116,12 +118,12 @@ const Home = () => {
       </section>
 
       {/* Why Us Section */}
-      <div id="why-us">
+      <div id="why-us" className="relative z-10">
         <WhyUs />
       </div>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-background">
+      <section id="services" className="py-24 bg-background relative z-10">
         <div className="container mx-auto px-4">
           <div ref={servicesTitle.ref} className={`scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
@@ -169,17 +171,17 @@ const Home = () => {
       </section>
 
       {/* Portfolio Section */}
-      <div id="portfolio">
+      <div id="portfolio" className="relative z-10">
         <Portfolio />
       </div>
 
       {/* Testimonials Section */}
-      <div id="testimonials">
+      <div id="testimonials" className="relative z-10">
         <Testimonials />
       </div>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-card">
+      <section id="about" className="py-24 bg-card relative z-10">
         <div className="container mx-auto px-4 max-w-4xl">
           <div ref={aboutTitle.ref} className={`scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient">
@@ -208,7 +210,7 @@ const Home = () => {
 
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-background">
+      <section id="contact" className="py-24 bg-background relative z-10">
         <div className="container mx-auto px-4 max-w-4xl">
           <div ref={contactTitle.ref} className={`scroll-fade-in ${contactTitle.isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
@@ -253,9 +255,13 @@ const Home = () => {
       </section>
 
       {/* Map Section */}
-      <MapSection />
+      <div className="relative z-10">
+        <MapSection />
+      </div>
 
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </div>
   );
 };
