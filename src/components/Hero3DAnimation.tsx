@@ -11,7 +11,7 @@ interface TileProps {
 
 const Tile = ({ position, delay, color }: TileProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [roughnessMap, setRoughnessMap] = useState<THREE.CanvasTexture | null>(null);
   
   const initialPosition = useMemo(() => {
     return [
@@ -22,40 +22,40 @@ const Tile = ({ position, delay, color }: TileProps) => {
   }, [position]);
 
   useEffect(() => {
-    // Create subtle ceramic pattern
+    // Create subtle ceramic pattern for roughness
     const canvas = document.createElement('canvas');
     canvas.width = 256;
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Base color
-      ctx.fillStyle = '#ffffff';
+      // Base gray for roughness map
+      ctx.fillStyle = '#888888';
       ctx.fillRect(0, 0, 256, 256);
       
       // Add very subtle noise pattern for ceramic texture
-      for (let i = 0; i < 800; i++) {
+      for (let i = 0; i < 1200; i++) {
         const x = Math.random() * 256;
         const y = Math.random() * 256;
-        const opacity = Math.random() * 0.03;
-        ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
-        ctx.fillRect(x, y, 1, 1);
+        const brightness = Math.random() * 60 + 100;
+        ctx.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+        ctx.fillRect(x, y, 2, 2);
       }
       
       // Add subtle diagonal lines for ceramic feel
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.lineWidth = 1;
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 8; i++) {
         ctx.beginPath();
-        ctx.moveTo(i * 50, 0);
-        ctx.lineTo(i * 50 + 256, 256);
+        ctx.moveTo(i * 40, 0);
+        ctx.lineTo(i * 40 + 256, 256);
         ctx.stroke();
       }
       
       const canvasTexture = new THREE.CanvasTexture(canvas);
       canvasTexture.wrapS = THREE.RepeatWrapping;
       canvasTexture.wrapT = THREE.RepeatWrapping;
-      setTexture(canvasTexture);
+      setRoughnessMap(canvasTexture);
     }
   }, []);
 
@@ -111,10 +111,10 @@ const Tile = ({ position, delay, color }: TileProps) => {
         <boxGeometry args={[1.8, 1.8, 0.2]} />
         <meshStandardMaterial
           color={color}
-          map={texture}
-          roughness={0.15}
-          metalness={0.25}
-          envMapIntensity={1.3}
+          roughnessMap={roughnessMap}
+          roughness={0.2}
+          metalness={0.3}
+          envMapIntensity={1.4}
           transparent={true}
           opacity={0.9}
         />
