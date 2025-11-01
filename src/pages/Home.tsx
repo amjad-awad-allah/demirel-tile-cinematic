@@ -88,29 +88,36 @@ const Home = () => {
             />
           </div>
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-primary animate-fade-in drop-shadow-lg">
-            {t('heroTitle')}
-          </h1>
-          
-          <p className="text-lg md:text-xl lg:text-2xl mb-4 text-primary/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
-            {t('heroSubtitle')}
-          </p>
-          
-          <p className="text-base md:text-lg mb-10 text-primary/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
-            {t('heroDescription')}
-          </p>
-          
-          <Button 
-            onClick={scrollToContact}
-            size="lg" 
-            className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300 relative overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center">
-              {t('heroButton')}
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <span className="absolute inset-0 bg-gradient-to-r from-accent to-[hsl(var(--accent-hover))] opacity-0 group-hover:opacity-100 transition-opacity"></span>
-          </Button>
+          {/* Semi-transparent overlay behind text */}
+          <div className="relative">
+            <div className="absolute inset-0 -m-8 bg-white/40 backdrop-blur-sm rounded-3xl shadow-lg"></div>
+            
+            <div className="relative">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-primary animate-fade-in drop-shadow-lg">
+                {t('heroTitle')}
+              </h1>
+              
+              <p className="text-lg md:text-xl lg:text-2xl mb-4 text-primary/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
+                {t('heroSubtitle')}
+              </p>
+              
+              <p className="text-base md:text-lg mb-10 text-primary/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
+                {t('heroDescription')}
+              </p>
+              
+              <Button 
+                onClick={scrollToContact}
+                size="lg" 
+                className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300 relative overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center">
+                  {t('heroButton')}
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-accent to-[hsl(var(--accent-hover))] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
