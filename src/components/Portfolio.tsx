@@ -45,7 +45,7 @@ export const Portfolio = () => {
 
   return (
     <>
-      <section className="py-24 bg-background">
+      <section id="portfolio" className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div ref={animation.ref} className={`scroll-fade-in ${animation.isVisible ? 'visible' : ''} text-center mb-16`}>
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">

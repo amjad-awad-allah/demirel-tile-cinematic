@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import logo from '@/assets/logo-transparent.svg';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -12,7 +13,10 @@ export const Navigation = () => {
 
   const navItems = [
     { id: 'home', label: t('home') },
+    { id: 'why-us', label: t('whyUs') },
     { id: 'services', label: t('services') },
+    { id: 'portfolio', label: t('portfolio') },
+    { id: 'testimonials', label: t('testimonials') },
     { id: 'about', label: t('about') },
     { id: 'contact', label: t('contact') },
   ];
@@ -50,21 +54,18 @@ export const Navigation = () => {
             ))}
 
             {/* Language Switcher */}
-            <div className="flex gap-2">
-              <Button
-                variant={language === 'en' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('en')}
-              >
-                EN
-              </Button>
-              <Button
-                variant={language === 'de' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('de')}
-              >
-                DE
-              </Button>
+            <div className="relative">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="min-w-[64px]">
+                    {language.toUpperCase()}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="z-[9999]">
+                  <DropdownMenuItem onClick={() => setLanguage('de')}>DE</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('en')}>EN</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -72,6 +73,7 @@ export const Navigation = () => {
           <button
             className="md:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -89,21 +91,18 @@ export const Navigation = () => {
                 {item.label}
               </button>
             ))}
-            <div className="flex gap-2 mt-4">
-              <Button
-                variant={language === 'en' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('en')}
-              >
-                EN
-              </Button>
-              <Button
-                variant={language === 'de' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('de')}
-              >
-                DE
-              </Button>
+            <div className="mt-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="w-full justify-between">
+                    {language.toUpperCase()}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="z-[9999]">
+                  <DropdownMenuItem onClick={() => setLanguage('de')}>DE</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('en')}>EN</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         )}

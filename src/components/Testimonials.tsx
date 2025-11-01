@@ -46,7 +46,7 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-card">
+    <section id="testimonials" className="py-24 bg-card">
       <div className="container mx-auto px-4">
         <div ref={animation.ref} className={`scroll-fade-in ${animation.isVisible ? 'visible' : ''} text-center mb-16`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">

@@ -30,20 +30,20 @@ const Tile = ({ position, delay, color }: TileProps) => {
     
     if (ctx) {
       // Base gray for roughness map
-      ctx.fillStyle = '#888888';
+      ctx.fillStyle = '#f0f0f0';
       ctx.fillRect(0, 0, 256, 256);
       
       // Add very subtle noise pattern for ceramic texture
       for (let i = 0; i < 1200; i++) {
         const x = Math.random() * 256;
         const y = Math.random() * 256;
-        const brightness = Math.random() * 60 + 100;
+        const brightness = Math.random() * 15 + 235;
         ctx.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
         ctx.fillRect(x, y, 2, 2);
       }
       
       // Add subtle diagonal lines for ceramic feel
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)';
       ctx.lineWidth = 1;
       for (let i = 0; i < 8; i++) {
         ctx.beginPath();
@@ -112,11 +112,11 @@ const Tile = ({ position, delay, color }: TileProps) => {
         <meshStandardMaterial
           color={color}
           roughnessMap={roughnessMap}
-          roughness={0.2}
-          metalness={0.3}
-          envMapIntensity={1.4}
+          roughness={0.18}
+          metalness={0.02}
+          envMapIntensity={0.6}
           transparent={true}
-          opacity={0.9}
+          opacity={0.88}
         />
         <Edges scale={1.002} threshold={15} color={'hsl(0 0% 60%)'} />
       </mesh>
@@ -128,12 +128,12 @@ const TileGrid = () => {
   const tiles = useMemo(() => {
     const result = [];
 const colors = [
-  'hsla(35, 15%, 88%, 0.9)',
-  'hsla(30, 12%, 86%, 0.9)',
-  'hsla(40, 10%, 90%, 0.9)',
-  'hsla(0, 0%, 87%, 0.9)',
-  'hsla(0, 0%, 89%, 0.9)',
-  'hsla(25, 8%, 85%, 0.9)'
+  'hsl(35 22% 95%)',
+  'hsl(34 18% 96%)',
+  'hsl(36 20% 94%)',
+  'hsl(30 16% 95%)',
+  'hsl(38 18% 95%)',
+  'hsl(28 14% 94%)'
 ];
 
 

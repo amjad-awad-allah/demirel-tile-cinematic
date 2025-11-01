@@ -7,7 +7,6 @@ import { Footer } from '@/components/Footer';
 import { WhyUs } from '@/components/WhyUs';
 import { Portfolio } from '@/components/Portfolio';
 import { Testimonials } from '@/components/Testimonials';
-import { MapSection } from '@/components/MapSection';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import logo from '@/assets/logo-transparent.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
@@ -246,8 +245,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Map Section */}
-      <MapSection />
 
       <Footer />
     </div>

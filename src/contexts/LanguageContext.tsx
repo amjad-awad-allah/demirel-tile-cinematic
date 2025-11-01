@@ -15,6 +15,9 @@ const translations = {
     services: 'Services',
     about: 'About',
     contact: 'Contact',
+    portfolio: 'Portfolio',
+    testimonials: 'Testimonials',
+    whyUs: 'Why Us',
     
     // Hero
     heroTitle: 'Master Craftsmanship',
@@ -51,6 +54,9 @@ const translations = {
     services: 'Leistungen',
     about: 'Über uns',
     contact: 'Kontakt',
+    portfolio: 'Projekte',
+    testimonials: 'Kundenstimmen',
+    whyUs: 'Warum wir',
     
     // Hero
     heroTitle: 'Meisterliches Handwerk',
@@ -86,7 +92,7 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('de');
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.en] || key;
