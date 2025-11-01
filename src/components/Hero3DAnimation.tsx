@@ -57,7 +57,7 @@ const Tile = ({ position, delay, color }: TileProps) => {
   return (
     <Float speed={2} rotationIntensity={0.1} floatIntensity={0.2}>
       <mesh ref={meshRef} position={initialPosition} castShadow receiveShadow>
-        <boxGeometry args={[0.95, 0.95, 0.15]} />
+        <boxGeometry args={[1.8, 1.8, 0.2]} />
         <meshStandardMaterial
           color={color}
           roughness={0.2}
@@ -79,10 +79,10 @@ const TileGrid = () => {
     ];
 
     let delayCounter = 0;
-    for (let x = -6; x <= 6; x += 1) {
-      for (let y = -4; y <= 4; y += 1) {
+    for (let x = -5; x <= 5; x += 1) {
+      for (let y = -3; y <= 3; y += 1) {
         result.push({
-          position: [x * 1.05, y * 1.05, 0] as [number, number, number],
+          position: [x * 2, y * 2, 0] as [number, number, number],
           delay: delayCounter * 0.03,
           color: colors[Math.floor(Math.random() * colors.length)],
         });
