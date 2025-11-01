@@ -24,28 +24,28 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
   }, [position]);
 
   useEffect(() => {
-    // Create premium marble/ceramic texture with realistic details
+    // Create warm beige marble texture with elegant, natural appearance
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 1024;
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Premium marble base gradient (light beige to soft gray)
+      // Warm beige marble base gradient (#F5F4F2 → #E7E3DD)
       const baseGradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 1024);
-      baseGradient.addColorStop(0, '#F0EDE8');
-      baseGradient.addColorStop(0.3, '#EAE8E3');
-      baseGradient.addColorStop(0.6, '#E0DED9');
-      baseGradient.addColorStop(0.85, '#D9D6CF');
-      baseGradient.addColorStop(1, '#D5D2CC');
+      baseGradient.addColorStop(0, '#F8F7F5');
+      baseGradient.addColorStop(0.25, '#F5F4F2');
+      baseGradient.addColorStop(0.5, '#F0EEE9');
+      baseGradient.addColorStop(0.75, '#EBE8E3');
+      baseGradient.addColorStop(1, '#E7E3DD');
       ctx.fillStyle = baseGradient;
       ctx.fillRect(0, 0, 1024, 1024);
       
-      // Natural marble veining system (organic flow)
+      // Subtle warm marble veining (light and elegant)
       ctx.globalCompositeOperation = 'multiply';
-      for (let i = 0; i < 18; i++) {
-        ctx.strokeStyle = `rgba(170, 165, 155, ${0.08 + Math.random() * 0.08})`;
-        ctx.lineWidth = 1 + Math.random() * 2;
+      for (let i = 0; i < 15; i++) {
+        ctx.strokeStyle = `rgba(200, 190, 175, ${0.06 + Math.random() * 0.06})`;
+        ctx.lineWidth = 1 + Math.random() * 1.5;
         ctx.beginPath();
         ctx.moveTo(Math.random() * 1024, 0);
         for (let j = 0; j < 5; j++) {
@@ -59,37 +59,38 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       }
       ctx.globalCompositeOperation = 'source-over';
       
-      // Fine crystalline structure (ceramic quality)
-      for (let i = 0; i < 5000; i++) {
+      // Fine warm crystalline grain (ceramic quality with beige tone)
+      for (let i = 0; i < 4500; i++) {
         const x = Math.random() * 1024;
         const y = Math.random() * 1024;
-        const brightness = Math.random() * 20 + 230;
-        const alpha = Math.random() * 0.12 + 0.08;
-        ctx.fillStyle = `rgba(${brightness}, ${brightness - 2}, ${brightness - 5}, ${alpha})`;
+        const brightness = Math.random() * 15 + 235;
+        const warmth = Math.random() * 8;
+        const alpha = Math.random() * 0.1 + 0.06;
+        ctx.fillStyle = `rgba(${brightness + warmth}, ${brightness}, ${brightness - warmth}, ${alpha})`;
         ctx.fillRect(x, y, 1, 1);
       }
       
-      // Natural stone speckles and mineral deposits
-      for (let i = 0; i < 150; i++) {
+      // Natural warm stone speckles (beige/taupe mineral deposits)
+      for (let i = 0; i < 120; i++) {
         const x = Math.random() * 1024;
         const y = Math.random() * 1024;
-        const size = Math.random() * 3 + 1;
-        const darkness = 160 + Math.random() * 40;
-        ctx.fillStyle = `rgba(${darkness}, ${darkness - 5}, ${darkness - 10}, 0.15)`;
+        const size = Math.random() * 2.5 + 0.8;
+        const tone = 195 + Math.random() * 30;
+        ctx.fillStyle = `rgba(${tone + 10}, ${tone}, ${tone - 10}, 0.12)`;
         ctx.beginPath();
         ctx.arc(x, y, size / 2, 0, Math.PI * 2);
         ctx.fill();
       }
       
-      // Subtle polished highlights
+      // Subtle polished highlights (warm glow)
       ctx.globalCompositeOperation = 'screen';
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 25; i++) {
         const x = Math.random() * 1024;
         const y = Math.random() * 1024;
-        const radius = Math.random() * 40 + 20;
+        const radius = Math.random() * 35 + 18;
         const highlight = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        highlight.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
-        highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        highlight.addColorStop(0, 'rgba(255, 250, 240, 0.06)');
+        highlight.addColorStop(1, 'rgba(255, 250, 240, 0)');
         ctx.fillStyle = highlight;
         ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
       }
@@ -98,7 +99,7 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       const canvasTexture = new THREE.CanvasTexture(canvas);
       canvasTexture.wrapS = THREE.RepeatWrapping;
       canvasTexture.wrapT = THREE.RepeatWrapping;
-      canvasTexture.anisotropy = 16; // High-quality texture filtering
+      canvasTexture.anisotropy = 16;
       setTexture(canvasTexture);
     }
   }, []);
@@ -163,11 +164,11 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       <meshStandardMaterial
         map={texture}
         color={color}
-        roughness={0.3}
+        roughness={0.35}
         metalness={0.05}
-        envMapIntensity={1.2}
+        envMapIntensity={1.1}
         transparent={true}
-        opacity={Math.max(0.8, depthOpacity)}
+        opacity={Math.max(0.85, depthOpacity)}
       />
     </mesh>
   );
@@ -175,7 +176,17 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
 
 const TileGrid = () => {
   const tiles = useMemo(() => {
-    const colors = ['#EAE8E3', '#E0DED9', '#D9D6CF', '#D5D3CE'];
+    // Warm beige marble palette with orange accent glow
+    const colors = [
+      '#F5F4F2', // Primary: Light beige marble
+      '#E7E3DD', // Secondary: Soft stone gray
+      '#F5F4F2', // Primary repeated
+      '#E7E3DD', // Secondary repeated
+      '#F5F4F2', // Primary repeated
+      '#E7E3DD', // Secondary repeated
+      'rgba(232, 117, 43, 0.08)', // Accent: Orange glow (tile 7)
+      '#F5F4F2', // Primary
+    ];
     const diagonalAngle = (15 * Math.PI) / 180; // 15 degrees
     
     return [
@@ -274,11 +285,11 @@ export const Hero3DAnimation = () => {
         {/* HDRI Environment for realistic reflections */}
         <Environment preset="studio" />
         
-        {/* Premium lighting setup: white-golden directional + soft ambient */}
-        <ambientLight intensity={0.4} color="#ffffff" />
+        {/* Premium warm white lighting setup for natural marble appearance */}
+        <ambientLight intensity={0.5} color="#FFFAF5" />
         <directionalLight
           position={[-12, 15, 10]}
-          intensity={1.2}
+          intensity={1.3}
           castShadow
           shadow-mapSize={[4096, 4096]}
           shadow-camera-far={50}
@@ -287,23 +298,23 @@ export const Hero3DAnimation = () => {
           shadow-camera-top={25}
           shadow-camera-bottom={-25}
           shadow-bias={-0.00015}
-          shadow-radius={8}
-          color="#FFF9F0"
+          shadow-radius={10}
+          color="#FFF6EA"
         />
         <directionalLight 
           position={[8, -4, -5]} 
-          intensity={0.25} 
-          color="#F5F0E8" 
+          intensity={0.3} 
+          color="#FFF9F0" 
         />
         <pointLight 
           position={[-8, 8, 12]} 
-          intensity={0.3} 
+          intensity={0.35} 
           distance={35} 
-          color="#FFFAF5"
+          color="#FFFCF7"
           castShadow
         />
         <hemisphereLight 
-          args={['#FFFBF7', '#D9D6CF', 0.35]} 
+          args={['#FFFCF7', '#E7E3DD', 0.4]} 
         />
 
         {/* Tiles */}
