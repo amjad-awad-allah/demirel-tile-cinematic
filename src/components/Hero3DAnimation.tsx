@@ -92,6 +92,7 @@ const colors = [
 ];
 
 
+
     let delayCounter = 0;
     for (let x = -6; x <= 6; x += 1) {
       for (let y = -4; y <= 4; y += 1) {
