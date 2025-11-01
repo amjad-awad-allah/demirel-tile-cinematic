@@ -69,6 +69,9 @@ const Home = () => {
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#1A1E24]">
         <HeroTileAnimation />
         
+        {/* Dark overlay for text clarity */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70 z-[5]"></div>
+        
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <div className="mb-8 animate-fade-in">
             <img 

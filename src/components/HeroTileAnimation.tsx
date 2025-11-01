@@ -44,8 +44,8 @@ export const HeroTileAnimation = () => {
       }
     }
 
-    // Colors from the logo: dark blue, orange, blue-grey, variations
-    const colors = ['#1e3a5f', '#ff6b35', '#3d5a80', '#2a4568', '#34495e', '#e67e22'];
+    // Colors from the logo: dark blue (#1e3a5f), orange (#ff6b35), blue-grey (#3d5a80), and complementary shades
+    const colors = ['#1e3a5f', '#ff6b35', '#3d5a80', '#2a4568', '#243447', '#ff8c5a', '#4a6885', '#1a2f4a'];
     let startTime = Date.now();
 
     const drawTile = (tile: Tile, progress: number, time: number = 0) => {
