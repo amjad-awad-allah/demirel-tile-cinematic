@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Edges } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,6 +11,8 @@ interface TileProps {
 
 const Tile = ({ position, delay, color }: TileProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  
   const initialPosition = useMemo(() => {
     return [
       position[0] + (Math.random() - 0.5) * 20,
@@ -18,6 +20,44 @@ const Tile = ({ position, delay, color }: TileProps) => {
       position[2] + (Math.random() - 0.5) * 10,
     ] as [number, number, number];
   }, [position]);
+
+  useEffect(() => {
+    // Create subtle ceramic pattern
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    
+    if (ctx) {
+      // Base color
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 256, 256);
+      
+      // Add very subtle noise pattern for ceramic texture
+      for (let i = 0; i < 800; i++) {
+        const x = Math.random() * 256;
+        const y = Math.random() * 256;
+        const opacity = Math.random() * 0.03;
+        ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+        ctx.fillRect(x, y, 1, 1);
+      }
+      
+      // Add subtle diagonal lines for ceramic feel
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * 50, 0);
+        ctx.lineTo(i * 50 + 256, 256);
+        ctx.stroke();
+      }
+      
+      const canvasTexture = new THREE.CanvasTexture(canvas);
+      canvasTexture.wrapS = THREE.RepeatWrapping;
+      canvasTexture.wrapT = THREE.RepeatWrapping;
+      setTexture(canvasTexture);
+    }
+  }, []);
 
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -71,13 +111,14 @@ const Tile = ({ position, delay, color }: TileProps) => {
         <boxGeometry args={[1.8, 1.8, 0.2]} />
         <meshStandardMaterial
           color={color}
-          roughness={0.4}
-          metalness={0.1}
-          envMapIntensity={0.7}
+          map={texture}
+          roughness={0.15}
+          metalness={0.25}
+          envMapIntensity={1.3}
           transparent={true}
           opacity={0.9}
         />
-        <Edges scale={1.002} threshold={15} color={'hsl(0 0% 55%)'} />
+        <Edges scale={1.002} threshold={15} color={'hsl(0 0% 60%)'} />
       </mesh>
     </Float>
   );
