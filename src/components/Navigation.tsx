@@ -3,13 +3,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from './ui/button';
 import logo from '@/assets/logo-transparent.svg';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
     { id: 'home', label: t('home') },
@@ -29,6 +30,25 @@ export const Navigation = () => {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => item.id);
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
@@ -47,7 +67,9 @@ export const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-sm font-medium transition-colors hover:text-accent text-foreground"
+                className={`text-sm font-medium transition-colors hover:text-accent ${
+                  activeSection === item.id ? 'text-accent font-semibold' : 'text-foreground'
+                }`}
               >
                 {item.label}
               </button>
@@ -86,7 +108,9 @@ export const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left py-3 text-sm font-medium transition-colors hover:text-accent text-foreground"
+                className={`block w-full text-left py-3 text-sm font-medium transition-colors hover:text-accent ${
+                  activeSection === item.id ? 'text-accent font-semibold' : 'text-foreground'
+                }`}
               >
                 {item.label}
               </button>
