@@ -79,24 +79,24 @@ const Home = () => {
         {/* Dark overlay for text clarity */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70 z-[5]"></div>
         
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <div className="mb-8 animate-fade-in">
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          <div className="mb-12 animate-fade-in">
             <img 
               src={logo} 
               alt="Fliesen Demirel" 
-              className="h-32 w-auto mx-auto mb-6 drop-shadow-2xl"
+              className="h-48 md:h-64 lg:h-72 w-auto mx-auto drop-shadow-2xl"
             />
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white animate-fade-in drop-shadow-lg">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-white animate-fade-in drop-shadow-lg">
             {t('heroTitle')}
           </h1>
           
-          <p className="text-xl md:text-2xl mb-4 text-white/90 animate-fade-in drop-shadow-md">
+          <p className="text-lg md:text-xl lg:text-2xl mb-4 text-white/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
             {t('heroSubtitle')}
           </p>
           
-          <p className="text-lg mb-8 text-white/80 animate-fade-in drop-shadow-md">
+          <p className="text-base md:text-lg mb-10 text-white/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
             {t('heroDescription')}
           </p>
           
