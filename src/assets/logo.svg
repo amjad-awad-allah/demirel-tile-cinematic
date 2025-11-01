@@ -1,0 +1,18 @@
+<svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg">
+  <rect x="50" y="30" width="1100" height="440" fill="#f8f9fa" rx="15" stroke="#ddd" stroke-width="2"/>
+
+  <!-- Logo icon -->
+  <g transform="translate(130,180)">
+    <rect x="0" y="25" width="70" height="70" fill="#1e3a5f" transform="rotate(-10 35 60)"/>
+    <rect x="40" y="12" width="70" height="70" fill="#ff6b35" transform="rotate(10 75 47)"/>
+    <rect x="22" y="45" width="70" height="70" fill="#3d5a80" transform="rotate(0 57 80)" opacity="0.82"/>
+  </g>
+
+  <!-- Text -->
+  <g transform="translate(270,0)">
+    <text x="0" y="240" font-family="Arial, sans-serif" font-size="80" font-weight="900" fill="#1e3a5f" letter-spacing="-2">FLIESEN</text>
+    <text x="5" y="315" font-family="Arial, sans-serif" font-size="62" font-weight="300" fill="#3d5a80" letter-spacing="1">Demirel</text>
+    <rect x="0" y="335" width="200" height="3" fill="#ff6b35" rx="1.5"/>
+    <text x="0" y="370" font-family="Arial, sans-serif" font-size="23" font-weight="300" fill="#2a4568" letter-spacing="5">MEISTERBETRIEB</text>
+  </g>
+</svg>
