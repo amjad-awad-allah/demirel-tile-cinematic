@@ -86,10 +86,11 @@ const Tile = ({ position, delay, color }: TileProps) => {
 const TileGrid = () => {
   const tiles = useMemo(() => {
     const result = [];
-    const colors = [
-      'hsl(35 15% 88%)', 'hsl(30 12% 86%)', 'hsl(40 10% 90%)',
-      'hsl(0 0% 87%)', 'hsl(0 0% 89%)', 'hsl(25 8% 85%)'
-    ];
+const colors = [
+  'hsl(35 20% 97%)', 'hsl(30 15% 96%)', 'hsl(40 10% 98%)',
+  'hsl(0 0% 96%)', 'hsl(0 0% 98%)', 'hsl(25 8% 97%)'
+];
+
 
     let delayCounter = 0;
     for (let x = -6; x <= 6; x += 1) {
