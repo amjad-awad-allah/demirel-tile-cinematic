@@ -1,5 +1,6 @@
 import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface TileProps {
@@ -23,57 +24,81 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
   }, [position]);
 
   useEffect(() => {
-    // Create refined marble/stone texture with subtle details
+    // Create premium marble/ceramic texture with realistic details
     const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
+    canvas.width = 1024;
+    canvas.height = 1024;
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Base stone gradient (#EAE8E3 → #D9D6CF)
-      const gradient = ctx.createLinearGradient(0, 0, 512, 512);
-      gradient.addColorStop(0, '#EAE8E3');
-      gradient.addColorStop(0.4, '#E0DED9');
-      gradient.addColorStop(0.7, '#D9D6CF');
-      gradient.addColorStop(1, '#D5D3CE');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 512, 512);
+      // Premium marble base gradient (light beige to soft gray)
+      const baseGradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 1024);
+      baseGradient.addColorStop(0, '#F0EDE8');
+      baseGradient.addColorStop(0.3, '#EAE8E3');
+      baseGradient.addColorStop(0.6, '#E0DED9');
+      baseGradient.addColorStop(0.85, '#D9D6CF');
+      baseGradient.addColorStop(1, '#D5D2CC');
+      ctx.fillStyle = baseGradient;
+      ctx.fillRect(0, 0, 1024, 1024);
       
-      // Add elegant marble veins (subtle and natural)
-      ctx.strokeStyle = 'rgba(170, 165, 155, 0.12)';
-      ctx.lineWidth = 1.5;
-      for (let i = 0; i < 12; i++) {
+      // Natural marble veining system (organic flow)
+      ctx.globalCompositeOperation = 'multiply';
+      for (let i = 0; i < 18; i++) {
+        ctx.strokeStyle = `rgba(170, 165, 155, ${0.08 + Math.random() * 0.08})`;
+        ctx.lineWidth = 1 + Math.random() * 2;
         ctx.beginPath();
-        ctx.moveTo(Math.random() * 512, 0);
-        ctx.bezierCurveTo(
-          Math.random() * 512, Math.random() * 256,
-          Math.random() * 512, Math.random() * 256 + 256,
-          Math.random() * 512, 512
-        );
+        ctx.moveTo(Math.random() * 1024, 0);
+        for (let j = 0; j < 5; j++) {
+          ctx.bezierCurveTo(
+            Math.random() * 1024, Math.random() * 256 * (j + 1),
+            Math.random() * 1024, Math.random() * 256 * (j + 1),
+            Math.random() * 1024, 256 * (j + 1)
+          );
+        }
         ctx.stroke();
       }
+      ctx.globalCompositeOperation = 'source-over';
       
-      // Add fine marble texture (10-20% opacity effect)
-      for (let i = 0; i < 3000; i++) {
-        const x = Math.random() * 512;
-        const y = Math.random() * 512;
-        const brightness = Math.random() * 15 + 225;
-        ctx.fillStyle = `rgba(${brightness}, ${brightness - 3}, ${brightness - 6}, 0.15)`;
+      // Fine crystalline structure (ceramic quality)
+      for (let i = 0; i < 5000; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const brightness = Math.random() * 20 + 230;
+        const alpha = Math.random() * 0.12 + 0.08;
+        ctx.fillStyle = `rgba(${brightness}, ${brightness - 2}, ${brightness - 5}, ${alpha})`;
         ctx.fillRect(x, y, 1, 1);
       }
       
-      // Add occasional darker speckles for stone realism
-      for (let i = 0; i < 100; i++) {
-        const x = Math.random() * 512;
-        const y = Math.random() * 512;
-        const size = Math.random() * 2 + 1;
-        ctx.fillStyle = 'rgba(180, 175, 170, 0.2)';
-        ctx.fillRect(x, y, size, size);
+      // Natural stone speckles and mineral deposits
+      for (let i = 0; i < 150; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const size = Math.random() * 3 + 1;
+        const darkness = 160 + Math.random() * 40;
+        ctx.fillStyle = `rgba(${darkness}, ${darkness - 5}, ${darkness - 10}, 0.15)`;
+        ctx.beginPath();
+        ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
       }
+      
+      // Subtle polished highlights
+      ctx.globalCompositeOperation = 'screen';
+      for (let i = 0; i < 30; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const radius = Math.random() * 40 + 20;
+        const highlight = ctx.createRadialGradient(x, y, 0, x, y, radius);
+        highlight.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
+        highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = highlight;
+        ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+      }
+      ctx.globalCompositeOperation = 'source-over';
       
       const canvasTexture = new THREE.CanvasTexture(canvas);
       canvasTexture.wrapS = THREE.RepeatWrapping;
       canvasTexture.wrapT = THREE.RepeatWrapping;
+      canvasTexture.anisotropy = 16; // High-quality texture filtering
       setTexture(canvasTexture);
     }
   }, []);
@@ -109,20 +134,20 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       meshRef.current.rotation.y = THREE.MathUtils.lerp(Math.PI * 2, rotation[1], eased);
       meshRef.current.rotation.z = THREE.MathUtils.lerp(Math.PI, rotation[2], eased);
     } else {
-      // Slow floating animation after entrance (20s cycle)
-      const floatTime = (elapsed - delay - entranceDuration) * 0.05; // 20s cycle
+      // Premium slow floating animation (30s cycle for natural movement)
+      const floatTime = (elapsed - delay - entranceDuration) * 0.033; // 30s cycle
       
-      // Vertical movement: ±5px equivalent (±0.3 units)
-      const floatOffset = Math.sin(floatTime + delay * 2) * 0.3;
+      // Gentle vertical oscillation: ±4px equivalent (±0.25 units)
+      const floatOffset = Math.sin(floatTime + delay * 2) * 0.25;
       meshRef.current.position.y = position[1] + floatOffset;
       
-      // Subtle Y-axis rotation: 0-8° (0-0.14 radians)
-      const rotationRange = 0.14; // ~8 degrees
-      const yRotation = Math.sin(floatTime * 0.8 + delay) * rotationRange;
+      // Subtle Y-axis rotation: 0-6° (0-0.105 radians) for premium feel
+      const rotationRange = 0.105; // ~6 degrees
+      const yRotation = Math.sin(floatTime * 0.7 + delay) * rotationRange;
       meshRef.current.rotation.y = rotation[1] + yRotation;
       
-      // Very subtle X-axis tilt
-      const xRotation = Math.cos(floatTime * 0.6 + delay * 1.5) * 0.05;
+      // Minimal X-axis tilt for natural drift
+      const xRotation = Math.cos(floatTime * 0.5 + delay * 1.5) * 0.04;
       meshRef.current.rotation.x = rotation[0] + xRotation;
       
       meshRef.current.rotation.z = rotation[2];
@@ -138,11 +163,11 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       <meshStandardMaterial
         map={texture}
         color={color}
-        roughness={0.5}
+        roughness={0.3}
         metalness={0.05}
-        envMapIntensity={0.7}
+        envMapIntensity={1.2}
         transparent={true}
-        opacity={Math.max(0.75, depthOpacity)}
+        opacity={Math.max(0.8, depthOpacity)}
       />
     </mesh>
   );
@@ -235,36 +260,57 @@ export const Hero3DAnimation = () => {
       
       <Canvas
         camera={{ position: [0, 0, 18], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ 
+          antialias: true, 
+          alpha: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.0
+        }}
         style={{ background: 'transparent' }}
-        shadows
+        shadows="soft"
       >
         <color attach="background" args={['#f8f9fa']} />
         
-        {/* Refined Lighting: soft directional from top-left with gentle shadows */}
-        <ambientLight intensity={0.5} color="#ffffff" />
+        {/* HDRI Environment for realistic reflections */}
+        <Environment preset="studio" />
+        
+        {/* Premium lighting setup: white-golden directional + soft ambient */}
+        <ambientLight intensity={0.4} color="#ffffff" />
         <directionalLight
-          position={[-10, 12, 8]}
-          intensity={1.0}
+          position={[-12, 15, 10]}
+          intensity={1.2}
           castShadow
-          shadow-mapSize={[2048, 2048]}
+          shadow-mapSize={[4096, 4096]}
           shadow-camera-far={50}
-          shadow-camera-left={-20}
-          shadow-camera-right={20}
-          shadow-camera-top={20}
-          shadow-camera-bottom={-20}
-          shadow-bias={-0.0001}
-          color="#fffbf5"
+          shadow-camera-left={-25}
+          shadow-camera-right={25}
+          shadow-camera-top={25}
+          shadow-camera-bottom={-25}
+          shadow-bias={-0.00015}
+          shadow-radius={8}
+          color="#FFF9F0"
         />
-        <directionalLight position={[5, -3, -4]} intensity={0.3} color="#f5f3ef" />
-        <pointLight position={[-5, 5, 10]} intensity={0.35} distance={30} color="#ffffff" />
-        <hemisphereLight args={['#ffffff', '#d9d6cf', 0.4]} />
+        <directionalLight 
+          position={[8, -4, -5]} 
+          intensity={0.25} 
+          color="#F5F0E8" 
+        />
+        <pointLight 
+          position={[-8, 8, 12]} 
+          intensity={0.3} 
+          distance={35} 
+          color="#FFFAF5"
+          castShadow
+        />
+        <hemisphereLight 
+          args={['#FFFBF7', '#D9D6CF', 0.35]} 
+        />
 
         {/* Tiles */}
         <TileGrid />
 
-        {/* Atmospheric fog */}
-        <fog attach="fog" args={['#f8f9fa', 18, 40]} />
+        {/* Subtle atmospheric fog for depth */}
+        <fog attach="fog" args={['#f8f9fa', 20, 45]} />
       </Canvas>
     </div>
   );
