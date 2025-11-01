@@ -7,8 +7,6 @@ import { Footer } from '@/components/Footer';
 import { WhyUs } from '@/components/WhyUs';
 import { Portfolio } from '@/components/Portfolio';
 import { Testimonials } from '@/components/Testimonials';
-import { FAQ } from '@/components/FAQ';
-import { QuickQuote } from '@/components/QuickQuote';
 import { MapSection } from '@/components/MapSection';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import logo from '@/assets/logo-transparent.svg';
@@ -202,11 +200,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Quick Quote Section */}
-      <QuickQuote />
-
-      {/* FAQ Section */}
-      <FAQ />
 
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-background">
