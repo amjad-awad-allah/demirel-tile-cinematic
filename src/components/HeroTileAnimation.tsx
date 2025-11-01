@@ -7,6 +7,7 @@ interface Tile {
   pattern: number;
   floatOffset: number;
   floatSpeed: number;
+  seed: number; // For consistent patterns
 }
 
 export const HeroTileAnimation = () => {
@@ -47,10 +48,11 @@ export const HeroTileAnimation = () => {
         tiles.push({
           x: x * tileSize,
           y: y * tileSize,
-          delay: delayCounter * 40, // Sequential animation
+          delay: delayCounter * 40,
           pattern: Math.floor(Math.random() * colors.length),
           floatOffset: Math.random() * Math.PI * 2,
           floatSpeed: 0.5 + Math.random() * 0.5,
+          seed: Math.random(), // Fixed seed for consistent patterns
         });
         delayCounter++;
       }
@@ -58,20 +60,26 @@ export const HeroTileAnimation = () => {
 
     let startTime = Date.now();
 
-    const drawWoodGrain = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+    // Seeded random for consistent patterns
+    const seededRandom = (seed: number, index: number) => {
+      const x = Math.sin(seed * 12.9898 + index * 78.233) * 43758.5453;
+      return x - Math.floor(x);
+    };
+
+    const drawWoodGrain = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string, seed: number) => {
       ctx.fillStyle = baseColor;
       ctx.fillRect(x, y, size, size);
       
-      // Wood grain lines
+      // Wood grain lines - using seed for consistency
       ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
       ctx.lineWidth = 1;
       for (let i = 0; i < 8; i++) {
-        const offset = (Math.random() - 0.5) * 20;
+        const offset = (seededRandom(seed, i) - 0.5) * 20;
         ctx.beginPath();
         ctx.moveTo(x, y + (size / 8) * i + offset);
         ctx.quadraticCurveTo(
           x + size / 2, 
-          y + (size / 8) * i + offset + (Math.random() - 0.5) * 10,
+          y + (size / 8) * i + offset + (seededRandom(seed, i + 100) - 0.5) * 10,
           x + size, 
           y + (size / 8) * i + offset
         );
@@ -79,37 +87,37 @@ export const HeroTileAnimation = () => {
       }
     };
 
-    const drawMarble = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+    const drawMarble = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string, seed: number) => {
       ctx.fillStyle = baseColor;
       ctx.fillRect(x, y, size, size);
       
-      // Marble veins
+      // Marble veins - using seed for consistency
       ctx.strokeStyle = 'rgba(180, 180, 180, 0.3)';
       ctx.lineWidth = 2;
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
-        ctx.moveTo(x + Math.random() * size, y);
+        ctx.moveTo(x + seededRandom(seed, i) * size, y);
         ctx.quadraticCurveTo(
-          x + Math.random() * size,
+          x + seededRandom(seed, i + 10) * size,
           y + size / 2,
-          x + Math.random() * size,
+          x + seededRandom(seed, i + 20) * size,
           y + size
         );
         ctx.stroke();
       }
     };
 
-    const drawTerrazzo = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+    const drawTerrazzo = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string, seed: number) => {
       ctx.fillStyle = baseColor;
       ctx.fillRect(x, y, size, size);
       
-      // Terrazzo chips
+      // Terrazzo chips - using seed for consistency
       const chips = ['#ffffff', '#333333', '#666666', '#999999'];
       for (let i = 0; i < 15; i++) {
-        ctx.fillStyle = chips[Math.floor(Math.random() * chips.length)];
-        const chipX = x + Math.random() * size;
-        const chipY = y + Math.random() * size;
-        const chipSize = Math.random() * 8 + 3;
+        ctx.fillStyle = chips[Math.floor(seededRandom(seed, i) * chips.length)];
+        const chipX = x + seededRandom(seed, i + 100) * size;
+        const chipY = y + seededRandom(seed, i + 200) * size;
+        const chipSize = seededRandom(seed, i + 300) * 8 + 3;
         ctx.beginPath();
         ctx.arc(chipX, chipY, chipSize, 0, Math.PI * 2);
         ctx.fill();
@@ -131,13 +139,13 @@ export const HeroTileAnimation = () => {
 
       const tileColor = colors[tile.pattern];
       
-      // Draw tile with pattern based on type
+      // Draw tile with pattern based on type - using tile.seed for consistency
       if (tileColor.pattern === 'wood') {
-        drawWoodGrain(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+        drawWoodGrain(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
       } else if (tileColor.pattern === 'marble') {
-        drawMarble(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+        drawMarble(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
       } else if (tileColor.pattern === 'terrazzo') {
-        drawTerrazzo(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+        drawTerrazzo(ctx, tile.x + offset, tile.y + offset, size, tileColor.base, tile.seed);
       } else {
         ctx.fillStyle = tileColor.base;
         ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
