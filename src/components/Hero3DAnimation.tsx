@@ -87,8 +87,8 @@ const TileGrid = () => {
   const tiles = useMemo(() => {
     const result = [];
     const colors = [
-      'hsl(35 30% 72%)', 'hsl(30 25% 68%)', 'hsl(40 20% 76%)',
-      'hsl(0 0% 78%)', 'hsl(0 0% 72%)', 'hsl(25 20% 64%)'
+      'hsl(35 15% 88%)', 'hsl(30 12% 86%)', 'hsl(40 10% 90%)',
+      'hsl(0 0% 87%)', 'hsl(0 0% 89%)', 'hsl(25 8% 85%)'
     ];
 
     let delayCounter = 0;
