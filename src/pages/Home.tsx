@@ -73,11 +73,11 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#1A1E24]">
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
         <Hero3DAnimation />
         
-        {/* Dark overlay for text clarity */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60 z-[5]"></div>
+        {/* Subtle overlay for text clarity */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/10 to-primary/30 z-[5]"></div>
         
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="mb-12 animate-fade-in">
@@ -88,15 +88,15 @@ const Home = () => {
             />
           </div>
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-white animate-fade-in drop-shadow-lg">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-primary animate-fade-in drop-shadow-lg">
             {t('heroTitle')}
           </h1>
           
-          <p className="text-lg md:text-xl lg:text-2xl mb-4 text-white/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl mb-4 text-primary/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
             {t('heroSubtitle')}
           </p>
           
-          <p className="text-base md:text-lg mb-10 text-white/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
+          <p className="text-base md:text-lg mb-10 text-primary/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
             {t('heroDescription')}
           </p>
           

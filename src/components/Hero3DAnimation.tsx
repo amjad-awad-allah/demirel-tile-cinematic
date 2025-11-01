@@ -47,10 +47,21 @@ const Tile = ({ position, delay, color }: TileProps) => {
       meshRef.current.rotation.x = (1 - progress) * Math.PI * 2;
       meshRef.current.rotation.y = (1 - progress) * Math.PI * 2;
     } else {
-      // Ensure final position
-      meshRef.current.position.set(...position);
-      meshRef.current.rotation.x = 0;
-      meshRef.current.rotation.y = 0;
+      // Wave animation after assembly
+      const waveTime = elapsed - delay - 2;
+      if (waveTime > 0) {
+        const wave = Math.sin(position[0] * 0.3 + position[1] * 0.3 + waveTime * 2) * 0.3;
+        meshRef.current.position.z = position[2] + wave;
+        
+        // Gentle rotation wave
+        meshRef.current.rotation.z = Math.sin(position[0] * 0.2 + waveTime) * 0.1;
+      } else {
+        // Ensure final position
+        meshRef.current.position.set(...position);
+        meshRef.current.rotation.x = 0;
+        meshRef.current.rotation.y = 0;
+        meshRef.current.rotation.z = 0;
+      }
     }
   });
 
@@ -79,10 +90,10 @@ const TileGrid = () => {
     ];
 
     let delayCounter = 0;
-    for (let x = -5; x <= 5; x += 1) {
-      for (let y = -3; y <= 3; y += 1) {
+    for (let x = -6; x <= 6; x += 1) {
+      for (let y = -4; y <= 4; y += 1) {
         result.push({
-          position: [x * 2, y * 2, 0] as [number, number, number],
+          position: [x * 1.9, y * 1.9, 0] as [number, number, number],
           delay: delayCounter * 0.03,
           color: colors[Math.floor(Math.random() * colors.length)],
         });
@@ -109,24 +120,24 @@ export const Hero3DAnimation = () => {
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        <color attach="background" args={['#1A1E24']} />
+        <color attach="background" args={['#f8f9fa']} />
         
         {/* Lighting */}
-        <ambientLight intensity={0.6} />
+        <ambientLight intensity={0.8} />
         <directionalLight
           position={[10, 10, 5]}
-          intensity={1}
+          intensity={0.8}
           castShadow
           shadow-mapSize={[2048, 2048]}
         />
-        <directionalLight position={[-10, -10, -5]} intensity={0.3} />
-        <pointLight position={[0, 0, 10]} intensity={0.5} color="#ff6b35" />
+        <directionalLight position={[-10, -10, -5]} intensity={0.4} />
+        <pointLight position={[5, 5, 10]} intensity={0.3} color="#ff6b35" />
 
         {/* Tiles */}
         <TileGrid />
 
-        {/* Environment effect */}
-        <fog attach="fog" args={['#1A1E24', 10, 30]} />
+        {/* Subtle fog */}
+        <fog attach="fog" args={['#f8f9fa', 15, 35]} />
       </Canvas>
     </div>
   );
