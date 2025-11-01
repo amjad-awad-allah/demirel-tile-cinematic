@@ -28,6 +28,18 @@ export const HeroTileAnimation = () => {
     const cols = Math.ceil(canvas.width / tileSize) + 1;
     const rows = Math.ceil(canvas.height / tileSize) + 1;
 
+    // Ceramic and tile colors: marble whites/greys, wood tones, terrazzo
+    const colors = [
+      { base: '#f5f5f0', pattern: 'marble' },      // White marble
+      { base: '#e8e6e3', pattern: 'solid' },        // Light grey
+      { base: '#d4d2c8', pattern: 'terrazzo' },     // Beige terrazzo
+      { base: '#c9b8a3', pattern: 'wood' },         // Light wood
+      { base: '#8b7355', pattern: 'wood' },         // Medium wood
+      { base: '#a89f91', pattern: 'solid' },        // Taupe
+      { base: '#f0ebe5', pattern: 'marble' },       // Cream marble
+      { base: '#5d4e37', pattern: 'wood' },         // Dark wood
+    ];
+
     const tiles: Tile[] = [];
     let delayCounter = 0;
     for (let y = 0; y < rows; y++) {
@@ -36,7 +48,7 @@ export const HeroTileAnimation = () => {
           x: x * tileSize,
           y: y * tileSize,
           delay: delayCounter * 40, // Sequential animation
-          pattern: Math.floor(Math.random() * 5),
+          pattern: Math.floor(Math.random() * colors.length),
           floatOffset: Math.random() * Math.PI * 2,
           floatSpeed: 0.5 + Math.random() * 0.5,
         });
@@ -44,9 +56,65 @@ export const HeroTileAnimation = () => {
       }
     }
 
-    // Colors from the logo: dark blue (#1e3a5f), orange (#ff6b35), blue-grey (#3d5a80), and complementary shades
-    const colors = ['#1e3a5f', '#ff6b35', '#3d5a80', '#2a4568', '#243447', '#ff8c5a', '#4a6885', '#1a2f4a'];
     let startTime = Date.now();
+
+    const drawWoodGrain = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(x, y, size, size);
+      
+      // Wood grain lines
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 8; i++) {
+        const offset = (Math.random() - 0.5) * 20;
+        ctx.beginPath();
+        ctx.moveTo(x, y + (size / 8) * i + offset);
+        ctx.quadraticCurveTo(
+          x + size / 2, 
+          y + (size / 8) * i + offset + (Math.random() - 0.5) * 10,
+          x + size, 
+          y + (size / 8) * i + offset
+        );
+        ctx.stroke();
+      }
+    };
+
+    const drawMarble = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(x, y, size, size);
+      
+      // Marble veins
+      ctx.strokeStyle = 'rgba(180, 180, 180, 0.3)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x + Math.random() * size, y);
+        ctx.quadraticCurveTo(
+          x + Math.random() * size,
+          y + size / 2,
+          x + Math.random() * size,
+          y + size
+        );
+        ctx.stroke();
+      }
+    };
+
+    const drawTerrazzo = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, baseColor: string) => {
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(x, y, size, size);
+      
+      // Terrazzo chips
+      const chips = ['#ffffff', '#333333', '#666666', '#999999'];
+      for (let i = 0; i < 15; i++) {
+        ctx.fillStyle = chips[Math.floor(Math.random() * chips.length)];
+        const chipX = x + Math.random() * size;
+        const chipY = y + Math.random() * size;
+        const chipSize = Math.random() * 8 + 3;
+        ctx.beginPath();
+        ctx.arc(chipX, chipY, chipSize, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
 
     const drawTile = (tile: Tile, progress: number, time: number = 0) => {
       const scale = Math.min(progress, 1);
@@ -61,13 +129,24 @@ export const HeroTileAnimation = () => {
       ctx.save();
       ctx.translate(0, floatY);
 
-      ctx.fillStyle = colors[tile.pattern];
-      ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
+      const tileColor = colors[tile.pattern];
+      
+      // Draw tile with pattern based on type
+      if (tileColor.pattern === 'wood') {
+        drawWoodGrain(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+      } else if (tileColor.pattern === 'marble') {
+        drawMarble(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+      } else if (tileColor.pattern === 'terrazzo') {
+        drawTerrazzo(ctx, tile.x + offset, tile.y + offset, size, tileColor.base);
+      } else {
+        ctx.fillStyle = tileColor.base;
+        ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
+      }
 
-      // Grout lines (darker, more prominent)
+      // Grout lines
       if (scale > 0.3) {
-        ctx.strokeStyle = '#1A1E24';
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#9e9e9e';
+        ctx.lineWidth = 3;
         ctx.strokeRect(tile.x + offset, tile.y + offset, size, size);
       }
 
@@ -79,8 +158,8 @@ export const HeroTileAnimation = () => {
           tile.x + tileSize * 0.3,
           tile.y + tileSize * 0.3
         );
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.3)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.08)');
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = gradient;
         ctx.fillRect(tile.x + offset, tile.y + offset, size * 0.6, size * 0.6);
@@ -95,7 +174,7 @@ export const HeroTileAnimation = () => {
           tile.y + tileSize
         );
         shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        shadowGradient.addColorStop(1, 'rgba(0, 0, 0, 0.15)');
+        shadowGradient.addColorStop(1, 'rgba(0, 0, 0, 0.12)');
         ctx.fillStyle = shadowGradient;
         ctx.fillRect(tile.x + offset, tile.y + offset + size * 0.7, size, size * 0.3);
       }
