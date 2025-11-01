@@ -68,11 +68,13 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('home')}
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   {t('home')}
                 </button>
@@ -80,11 +82,13 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('services')}
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   {t('services')}
                 </button>
@@ -92,11 +96,13 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('about')}
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   {t('about')}
                 </button>
@@ -104,11 +110,13 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   {t('contact')}
                 </button>
@@ -128,15 +136,17 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <Mail 
                   className="w-5 h-5 mt-0.5 flex-shrink-0"
-                  style={{ color: '#C18F59' }}
+                  style={{ color: '#E8752B' }}
                 />
                 <a
                   href="mailto:info@fliesen-demirel.de"
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   info@fliesen-demirel.de
                 </a>
@@ -144,15 +154,17 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <Phone 
                   className="w-5 h-5 mt-0.5 flex-shrink-0"
-                  style={{ color: '#C18F59' }}
+                  style={{ color: '#E8752B' }}
                 />
                 <a
                   href="tel:+491234567890"
-                  className="text-sm transition-colors hover:text-white"
+                  className="text-sm transition-colors"
                   style={{ 
                     color: '#CCCCCC',
                     letterSpacing: '0.02em'
                   }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#E8752B'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#CCCCCC'}
                 >
                   +49 123 456 7890
                 </a>
@@ -160,7 +172,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin 
                   className="w-5 h-5 mt-0.5 flex-shrink-0"
-                  style={{ color: '#C18F59' }}
+                  style={{ color: '#E8752B' }}
                 />
                 <span 
                   className="text-sm"
@@ -193,7 +205,14 @@ export const Footer = () => {
                   className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                   style={{ 
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    borderColor: '#C18F59'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(232, 117, 43, 0.2)';
+                    e.currentTarget.style.borderColor = '#E8752B';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    e.currentTarget.style.borderColor = 'transparent';
                   }}
                   aria-label={social.label}
                 >

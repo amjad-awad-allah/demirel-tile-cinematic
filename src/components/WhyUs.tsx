@@ -39,13 +39,23 @@ export const WhyUs = () => {
   ];
 
   return (
-    <section id="why-us" className="py-24 bg-card">
+    <section 
+      id="why-us" 
+      className="py-24"
+      style={{ backgroundColor: '#F9F8F6' }}
+    >
       <div className="container mx-auto px-4">
         <div ref={animation.ref} className={`scroll-fade-in ${animation.isVisible ? 'visible' : ''} text-center mb-16`}>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+          <h2 
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ color: '#1E3D59' }}
+          >
             {t('language') === 'de' ? 'Warum Fliesen Demirel?' : 'Why Fliesen Demirel?'}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p 
+            className="text-lg max-w-2xl mx-auto"
+            style={{ color: '#6F6F6F' }}
+          >
             {t('language') === 'de'
               ? 'Vertrauen Sie auf Qualität, Erfahrung und Zuverlässigkeit'
               : 'Trust in quality, experience and reliability'}
@@ -63,12 +73,35 @@ export const WhyUs = () => {
                 className={`scroll-scale ${itemAnimation.isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <Card className="p-8 text-center hover-lift h-full border-2 hover:border-accent transition-all duration-300 group">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                    <feature.icon className="w-8 h-8 text-accent" />
+                <Card 
+                  className="p-8 text-center h-full border-0 group transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: '12px',
+                    boxShadow: '0 3px 12px rgba(0, 0, 0, 0.05)',
+                  }}
+                >
+                  <div 
+                    className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-opacity-20"
+                    style={{
+                      backgroundColor: 'rgba(232, 117, 43, 0.1)',
+                    }}
+                  >
+                    <feature.icon 
+                      className="w-8 h-8 transition-colors duration-300 group-hover:text-[#E8752B]"
+                      style={{ color: '#1E3D59' }}
+                      strokeWidth={2}
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 
+                    className="text-xl font-bold mb-3"
+                    style={{ color: '#1E3D59' }}
+                  >
+                    {feature.title}
+                  </h3>
+                  <p style={{ color: '#6F6F6F' }}>
+                    {feature.description}
+                  </p>
                 </Card>
               </div>
             );
