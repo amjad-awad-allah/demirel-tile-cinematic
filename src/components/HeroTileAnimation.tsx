@@ -38,7 +38,8 @@ export const HeroTileAnimation = () => {
       }
     }
 
-    const colors = ['#f8f9fa', '#ddd', '#e8e8e8', '#f0f0f0'];
+    // Realistic ceramic tile colors: marble, terrazzo, concrete, wood
+    const colors = ['#f5f5f0', '#e8e6e3', '#d4d2c8', '#c9b8a3', '#f0ebe5', '#e5dfd8'];
     let startTime = Date.now();
 
     const drawTile = (tile: Tile, progress: number) => {
@@ -49,14 +50,14 @@ export const HeroTileAnimation = () => {
       ctx.fillStyle = colors[tile.pattern];
       ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
 
-      // Grout lines
+      // Grout lines (darker, more realistic)
       if (scale > 0.5) {
-        ctx.strokeStyle = '#ccc';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#BDC3C7';
+        ctx.lineWidth = 3;
         ctx.strokeRect(tile.x + offset, tile.y + offset, size, size);
       }
 
-      // Subtle reflection
+      // Ceramic shine and reflection
       if (scale === 1) {
         const gradient = ctx.createLinearGradient(
           tile.x,
@@ -64,8 +65,9 @@ export const HeroTileAnimation = () => {
           tile.x,
           tile.y + tileSize
         );
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.15)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.05)');
         ctx.fillStyle = gradient;
         ctx.fillRect(tile.x + offset, tile.y + offset, size, size);
       }
@@ -75,7 +77,7 @@ export const HeroTileAnimation = () => {
       const elapsed = Date.now() - startTime;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#1e3a5f';
+      ctx.fillStyle = '#1A1E24';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (animationPhase === 'assembling') {
@@ -96,7 +98,7 @@ export const HeroTileAnimation = () => {
         // Fade to logo
         const fadeProgress = Math.min((elapsed - 2500) / 1000, 1);
         ctx.globalAlpha = fadeProgress;
-        ctx.fillStyle = '#1e3a5f';
+        ctx.fillStyle = '#1A1E24';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 1;
 
@@ -105,7 +107,7 @@ export const HeroTileAnimation = () => {
         }
       } else if (animationPhase === 'logo') {
         // Show pure background for logo
-        ctx.fillStyle = '#1e3a5f';
+        ctx.fillStyle = '#1A1E24';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         if (elapsed > 5000) {
@@ -119,7 +121,7 @@ export const HeroTileAnimation = () => {
         tiles.forEach((tile) => drawTile(tile, 1));
         
         ctx.globalAlpha = 1 - fadeProgress;
-        ctx.fillStyle = '#1e3a5f';
+        ctx.fillStyle = '#1A1E24';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 1;
 

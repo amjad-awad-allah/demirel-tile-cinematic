@@ -12,10 +12,10 @@ export const WhatsAppButton = () => {
   return (
     <Button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-transform bg-[#25D366] hover:bg-[#20BD5C] text-white p-0"
+      className="fixed bottom-6 right-6 z-[9999] w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 bg-[#25D366] hover:bg-[#20BD5C] text-white p-0 border-4 border-white"
       aria-label="Contact via WhatsApp"
     >
-      <MessageCircle size={28} />
+      <MessageCircle size={32} strokeWidth={2.5} />
     </Button>
   );
 };

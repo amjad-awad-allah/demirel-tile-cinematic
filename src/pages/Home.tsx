@@ -1,20 +1,72 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { HeroTileAnimation } from '@/components/HeroTileAnimation';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import logo from '@/assets/logo.svg';
+import { ArrowRight, Mail, Phone, Globe, MapPin } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import logo from '@/assets/logo-transparent.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
 import bathroomTiles from '@/assets/bathroom-tiles.jpg';
 import kitchenTiles from '@/assets/kitchen-tiles.jpg';
-import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { t } = useLanguage();
 
+  const services = [
+    {
+      title: t('bathroom'),
+      description: t('bathroomDesc'),
+      image: bathroomTiles,
+    },
+    {
+      title: t('kitchen'),
+      description: t('kitchenDesc'),
+      image: kitchenTiles,
+    },
+    {
+      title: t('commercial'),
+      description: t('commercialDesc'),
+      image: tilesHero,
+    },
+  ];
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: t('email'),
+      value: 'info@fliesen-demirel.de',
+      href: 'mailto:info@fliesen-demirel.de',
+    },
+    {
+      icon: Phone,
+      label: t('phone'),
+      value: '+49 123 456 7890',
+      href: 'tel:+491234567890',
+    },
+    {
+      icon: Globe,
+      label: t('website'),
+      value: 'www.fliesen-demirel.de',
+      href: 'https://www.fliesen-demirel.de',
+    },
+    {
+      icon: MapPin,
+      label: t('language') === 'de' ? 'Adresse' : 'Address',
+      value: 'Musterstraße 123, 12345 Berlin',
+      href: 'https://maps.google.com/?q=Berlin',
+    },
+  ];
+
+  const scrollToContact = () => {
+    const element = document.getElementById('contact');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#1A1E24]">
         <HeroTileAnimation />
         
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
@@ -38,70 +90,120 @@ const Home = () => {
             {t('heroDescription')}
           </p>
           
-          <Link to="/services">
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/90 text-white shadow-glow animate-fade-in group"
-            >
-              {t('heroButton')}
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
+          <Button 
+            onClick={scrollToContact}
+            size="lg" 
+            className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300"
+          >
+            {t('heroButton')}
+            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
       </section>
 
-      {/* Featured Work Preview */}
-      <section className="py-20 bg-background">
+      {/* Services Section */}
+      <section id="services" className="py-24 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4 text-gradient">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
             {t('servicesTitle')}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">
+          <p className="text-center text-muted-foreground mb-16 text-lg max-w-2xl mx-auto">
             {t('servicesSubtitle')}
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Bathroom */}
-            <div className="group hover-lift cursor-pointer">
-              <div className="relative overflow-hidden rounded-lg mb-4 aspect-[4/3]">
-                <img 
-                  src={bathroomTiles} 
-                  alt={t('bathroom')}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="space-y-24">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className={`flex flex-col ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } gap-12 items-center`}
+              >
+                <div className="flex-1">
+                  <div className="relative overflow-hidden rounded-lg aspect-[4/3] shadow-elegant">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4">{service.title}</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-2xl font-semibold mb-2">{t('bathroom')}</h3>
-              <p className="text-muted-foreground">{t('bathroomDesc')}</p>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Kitchen */}
-            <div className="group hover-lift cursor-pointer">
-              <div className="relative overflow-hidden rounded-lg mb-4 aspect-[4/3]">
-                <img 
-                  src={kitchenTiles} 
-                  alt={t('kitchen')}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-2">{t('kitchen')}</h3>
-              <p className="text-muted-foreground">{t('kitchenDesc')}</p>
-            </div>
+      {/* About Section */}
+      <section id="about" className="py-24 bg-card">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient">
+            {t('aboutTitle')}
+          </h2>
+          <div className="prose prose-lg mx-auto text-muted-foreground">
+            <p className="text-lg leading-relaxed mb-6">
+              {t('language') === 'de' 
+                ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Berlin und Umgebung. Mit über 20 Jahren Erfahrung vereinen wir traditionelles Handwerk mit modernen Techniken.'
+                : 'Fliesen Demirel Meisterbetrieb is your reliable partner for high-quality tile work in Berlin and surrounding areas. With over 20 years of experience, we combine traditional craftsmanship with modern techniques.'}
+            </p>
+            <p className="text-lg leading-relaxed mb-6">
+              {t('language') === 'de'
+                ? 'Unser erfahrenes Team legt großen Wert auf Präzision, Qualität und Kundenzufriedenheit. Ob privat oder gewerblich – wir realisieren Ihr Fliesenprojekt professionell und termingerecht.'
+                : 'Our experienced team places great emphasis on precision, quality and customer satisfaction. Whether private or commercial - we realize your tile project professionally and on schedule.'}
+            </p>
+            <p className="text-lg leading-relaxed">
+              {t('language') === 'de'
+                ? 'Von der Beratung über die Materialauswahl bis zur finalen Ausführung begleiten wir Sie kompetent durch jeden Schritt Ihres Projekts.'
+                : 'From consultation to material selection to final execution, we competently guide you through every step of your project.'}
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Commercial */}
-            <div className="group hover-lift cursor-pointer">
-              <div className="relative overflow-hidden rounded-lg mb-4 aspect-[4/3]">
-                <img 
-                  src={tilesHero} 
-                  alt={t('commercial')}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-2">{t('commercial')}</h3>
-              <p className="text-muted-foreground">{t('commercialDesc')}</p>
-            </div>
+      {/* Contact Section */}
+      <section id="contact" className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+            {t('contactTitle')}
+          </h2>
+          <p className="text-center text-muted-foreground mb-16 text-xl">
+            {t('contactSubtitle')}
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {contactInfo.map((item, index) => (
+              <Card
+                key={index}
+                className="p-6 hover-lift cursor-pointer border-2 hover:border-accent transition-colors"
+                onClick={() => window.open(item.href, item.icon === Globe ? '_blank' : '_self')}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-accent/10 rounded-lg">
+                    <item.icon className="w-6 h-6 text-accent" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm text-muted-foreground mb-1">
+                      {item.label}
+                    </div>
+                    <div className="font-semibold">{item.value}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <p className="text-muted-foreground mb-4">
+              {t('language') === 'de' 
+                ? 'Oder kontaktieren Sie uns direkt über WhatsApp mit dem Button rechts unten!'
+                : 'Or contact us directly via WhatsApp using the button at the bottom right!'}
+            </p>
           </div>
         </div>
       </section>

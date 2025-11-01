@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from './ui/button';
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/logo-transparent.svg';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -11,35 +11,42 @@ export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { path: '/', label: t('home') },
-    { path: '/services', label: t('services') },
-    { path: '/about', label: t('about') },
-    { path: '/contact', label: t('contact') },
+    { id: 'home', label: t('home') },
+    { id: 'services', label: t('services') },
+    { id: 'about', label: t('about') },
+    { id: 'contact', label: t('contact') },
   ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <img src={logo} alt="Fliesen Demirel" className="h-14 w-auto" />
-          </Link>
+          <button 
+            onClick={() => scrollToSection('home')} 
+            className="flex items-center hover:opacity-80 transition-opacity pl-4 md:pl-5"
+          >
+            <img src={logo} alt="Fliesen Demirel" className="h-9 md:h-16 w-auto" />
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-sm font-medium transition-colors hover:text-accent ${
-                  location.pathname === item.path
-                    ? 'text-accent'
-                    : 'text-foreground'
-                }`}
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="text-sm font-medium transition-colors hover:text-accent text-foreground"
               >
                 {item.label}
-              </Link>
+              </button>
             ))}
 
             {/* Language Switcher */}
@@ -74,18 +81,13 @@ export const Navigation = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block py-3 text-sm font-medium transition-colors hover:text-accent ${
-                  location.pathname === item.path
-                    ? 'text-accent'
-                    : 'text-foreground'
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="block w-full text-left py-3 text-sm font-medium transition-colors hover:text-accent text-foreground"
               >
                 {item.label}
-              </Link>
+              </button>
             ))}
             <div className="flex gap-2 mt-4">
               <Button
