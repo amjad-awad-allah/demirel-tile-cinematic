@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { HeroTileAnimation } from '@/components/HeroTileAnimation';
+import { Hero3DAnimation } from '@/components/Hero3DAnimation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Mail, Phone, Globe, MapPin } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -74,10 +74,10 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-[#1A1E24]">
-        <HeroTileAnimation />
+        <Hero3DAnimation />
         
         {/* Dark overlay for text clarity */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70 z-[5]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60 z-[5]"></div>
         
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="mb-12 animate-fade-in">
