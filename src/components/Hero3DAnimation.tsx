@@ -1,210 +1,143 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 
-type Vec3 = [number, number, number];
-
-interface TileData {
-  id: number;
-  startPosition: Vec3;
-  targetPosition: Vec3;
-  rotation: Vec3;
-  size: [number, number, number];
-  color: string;
-  spawnTime: number;
-  floatOffset: number;
-  scrollAtSpawn: number;
-}
-
 interface TileProps {
-  data: TileData;
-  scrollRef: { current: number };
+  position: [number, number, number];
+  delay: number;
+  color: string;
 }
 
-const Tile = ({ data, scrollRef }: TileProps) => {
+const Tile = ({ position, delay, color }: TileProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const initialPosition = useMemo(() => {
+    return [
+      position[0] + (Math.random() - 0.5) * 20,
+      position[1] + Math.random() * 10 + 15,
+      position[2] + (Math.random() - 0.5) * 10,
+    ] as [number, number, number];
+  }, [position]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
 
     const elapsed = state.clock.getElapsedTime();
-    const timeSinceSpawn = elapsed - data.spawnTime;
-
-    // Convert pixel scroll to world units
-    const ratio = state.viewport.height / state.size.height; // world units per pixel
-    const scrollOffsetY = (data.scrollAtSpawn - scrollRef.current) * ratio;
-
-    // Animation phase: falling (2 seconds)
-    const fallDuration = 2;
-    const progress = Math.min(timeSinceSpawn / fallDuration, 1);
-    const easeProgress = 1 - Math.pow(1 - progress, 3); // ease out cubic
-
-    let x = 0, y = 0, z = 0;
+    const progress = Math.min((elapsed - delay) / 2, 1);
 
     if (progress < 1) {
-      // Falling animation
-      x = THREE.MathUtils.lerp(
-        data.startPosition[0],
-        data.targetPosition[0],
-        easeProgress
+      // Assembly animation
+      meshRef.current.position.x = THREE.MathUtils.lerp(
+        initialPosition[0],
+        position[0],
+        progress
       );
-      y = THREE.MathUtils.lerp(
-        data.startPosition[1],
-        data.targetPosition[1],
-        easeProgress
+      meshRef.current.position.y = THREE.MathUtils.lerp(
+        initialPosition[1],
+        position[1],
+        progress
       );
-      z = THREE.MathUtils.lerp(
-        data.startPosition[2],
-        data.targetPosition[2],
-        easeProgress
+      meshRef.current.position.z = THREE.MathUtils.lerp(
+        initialPosition[2],
+        position[2],
+        progress
       );
 
-      // Rotation during fall
-      meshRef.current.rotation.x = data.rotation[0] * (1 - easeProgress) * Math.PI * 2;
-      meshRef.current.rotation.y = data.rotation[1] * (1 - easeProgress) * Math.PI * 2;
-      meshRef.current.rotation.z = data.rotation[2] * (1 - easeProgress);
+      // Rotation during assembly
+      meshRef.current.rotation.x = (1 - progress) * Math.PI * 2;
+      meshRef.current.rotation.y = (1 - progress) * Math.PI * 2;
     } else {
-      // Very subtle floating animation after landing - stays in fixed position (page-anchored)
-      const floatTime = elapsed + data.floatOffset;
-      x = data.targetPosition[0] + Math.sin(floatTime * 0.3) * 0.08;
-      y = data.targetPosition[1] + Math.sin(floatTime * 0.4) * 0.06;
-      z = data.targetPosition[2] + Math.cos(floatTime * 0.35) * 0.08;
-
-      // Very gentle rotation while floating
-      meshRef.current.rotation.x = Math.sin(floatTime * 0.15) * 0.02;
-      meshRef.current.rotation.y = Math.cos(floatTime * 0.18) * 0.02;
-      meshRef.current.rotation.z = Math.sin(floatTime * 0.12) * 0.015;
+      // Wave animation after assembly
+      const waveTime = elapsed - delay - 2;
+      if (waveTime > 0) {
+        const wave = Math.sin(position[0] * 0.3 + position[1] * 0.3 + waveTime * 2) * 0.3;
+        meshRef.current.position.z = position[2] + wave;
+        
+        // Gentle rotation wave
+        meshRef.current.rotation.z = Math.sin(position[0] * 0.2 + waveTime) * 0.1;
+      } else {
+        // Ensure final position
+        meshRef.current.position.set(...position);
+        meshRef.current.rotation.x = 0;
+        meshRef.current.rotation.y = 0;
+        meshRef.current.rotation.z = 0;
+      }
     }
-
-    // Apply page anchoring offset so tiles stick to their drop location on the page
-    meshRef.current.position.set(x, y + scrollOffsetY, z);
   });
 
   return (
-    <mesh ref={meshRef} position={data.startPosition}>
-      <boxGeometry args={data.size} />
-      <meshStandardMaterial
-        color={data.color}
-        roughness={0.35}
-        metalness={0.1}
-        envMapIntensity={0.4}
-        transparent
-        opacity={0.7}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
+    <Float speed={2} rotationIntensity={0.1} floatIntensity={0.2}>
+      <mesh ref={meshRef} position={initialPosition} castShadow receiveShadow>
+        <boxGeometry args={[1.8, 1.8, 0.2]} />
+        <meshStandardMaterial
+          color={color}
+          roughness={0.2}
+          metalness={0.1}
+          envMapIntensity={0.5}
+        />
+      </mesh>
+    </Float>
   );
 };
 
-// Ceramic and laminate colors
-const TILE_COLORS = [
-  '#e9e6df', // light marble
-  '#dcd7cf', // warm stone
-  '#c9c1b6', // beige ceramic
-  '#b59c7a', // sand stone
-  '#8b7355', // taupe brown
-  '#7b5b3b', // walnut
-  '#b28a67', // oak laminate
-  '#8a8f9a', // slate gray
-  '#a0826d', // terracotta
-  '#5d4e37', // dark wood
-];
+const TileGrid = () => {
+  const tiles = useMemo(() => {
+    const result = [];
+    const colors = [
+      '#ffffff', '#fefefe', '#f9f9f9', '#f5f5f5',
+      '#f0f0f0', '#ebebeb', '#e8e8e8', '#d9d9d9',
+      '#cccccc', '#f7f7f7'
+    ];
 
-let TILE_ID = 0;
-
-export const Hero3DAnimation = () => {
-  const [tiles, setTiles] = useState<TileData[]>([]);
-  const lastScrollY = useRef(0);
-  const lastSpawnTime = useRef(0);
-  const scrollRef = useRef(0);
-
-  const spawnTiles = (count: number, currentTime: number) => {
-    const newTiles: TileData[] = [];
-
-    for (let i = 0; i < count; i++) {
-      const isPlank = Math.random() < 0.3;
-      const width = isPlank ? Math.random() * 2 + 2 : Math.random() * 0.8 + 0.5;
-      const height = isPlank ? Math.random() * 0.3 + 0.2 : Math.random() * 0.8 + 0.5;
-      const thickness = 0.12;
-
-      // Start position (above viewport)
-      const startX = (Math.random() - 0.5) * 30;
-      const startY = 20 + Math.random() * 8;
-      const startZ = (Math.random() - 0.5) * 12;
-
-      // Target position (random in view)
-      const targetX = (Math.random() - 0.5) * 25;
-      const targetY = (Math.random() - 0.5) * 16;
-      const targetZ = -8 + Math.random() * 12;
-
-      const color = TILE_COLORS[Math.floor(Math.random() * TILE_COLORS.length)];
-
-      newTiles.push({
-        id: TILE_ID++,
-        startPosition: [startX, startY, startZ],
-        targetPosition: [targetX, targetY, targetZ],
-        rotation: [Math.random(), Math.random(), Math.random()],
-        size: [width, height, thickness],
-        color,
-        spawnTime: currentTime,
-        floatOffset: Math.random() * Math.PI * 2,
-        scrollAtSpawn: lastScrollY.current,
-      });
-    }
-
-    setTiles((prev) => [...prev, ...newTiles]);
-  };
-
-  useEffect(() => {
-    // Initial spawn
-    const initial = window.scrollY;
-    lastScrollY.current = initial;
-    scrollRef.current = initial;
-    spawnTiles(8, performance.now() / 1000);
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
-      const now = performance.now() / 1000;
-
-      lastScrollY.current = currentScrollY;
-      scrollRef.current = currentScrollY;
-
-      // Throttle spawning
-      if (now - lastSpawnTime.current < 0.15) return;
-      
-      // Spawn based on scroll intensity
-      if (scrollDelta > 30) {
-        const spawnCount = Math.min(Math.floor(scrollDelta / 80) + 1, 4);
-        spawnTiles(spawnCount, now);
-        lastSpawnTime.current = now;
+    let delayCounter = 0;
+    for (let x = -6; x <= 6; x += 1) {
+      for (let y = -4; y <= 4; y += 1) {
+        result.push({
+          position: [x * 1.9, y * 1.9, 0] as [number, number, number],
+          delay: delayCounter * 0.03,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+        delayCounter++;
       }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    }
+    return result;
   }, []);
 
-  const Lights = useMemo(() => (
-    <>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[8, 10, 8]} intensity={0.6} />
-      <directionalLight position={[-6, -5, -6]} intensity={0.3} />
-      <pointLight position={[0, 12, 6]} intensity={0.4} color="#b28a67" />
-    </>
-  ), []);
-
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <>
+      {tiles.map((tile, index) => (
+        <Tile key={index} {...tile} />
+      ))}
+    </>
+  );
+};
+
+export const Hero3DAnimation = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
       <Canvas
-        camera={{ position: [0, 0, 22], fov: 50 }}
+        camera={{ position: [0, 0, 15], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        {Lights}
-        {tiles.map((tile) => (
-          <Tile key={tile.id} data={tile} scrollRef={scrollRef} />
-        ))}
+        <color attach="background" args={['#f8f9fa']} />
+        
+        {/* Lighting */}
+        <ambientLight intensity={0.8} />
+        <directionalLight
+          position={[10, 10, 5]}
+          intensity={0.8}
+          castShadow
+          shadow-mapSize={[2048, 2048]}
+        />
+        <directionalLight position={[-10, -10, -5]} intensity={0.4} />
+        <pointLight position={[5, 5, 10]} intensity={0.3} color="#ff6b35" />
+
+        {/* Tiles */}
+        <TileGrid />
+
+        {/* Subtle fog */}
+        <fog attach="fog" args={['#f8f9fa', 15, 35]} />
       </Canvas>
     </div>
   );
