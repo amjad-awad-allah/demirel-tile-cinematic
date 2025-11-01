@@ -131,18 +131,18 @@ const Home = () => {
       <WhyUs />
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-background">
-        <div className="container mx-auto px-4">
+      <section id="services" className="py-24" style={{ backgroundColor: '#F9F8F6' }}>
+        <div className="max-w-7xl mx-auto px-4">
           <div ref={servicesTitle.ref} className={`scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4" style={{ color: '#1E3D59' }}>
               {t('servicesTitle')}
             </h2>
-            <p className="text-center text-muted-foreground mb-16 text-lg max-w-2xl mx-auto">
+            <p className="text-center mb-16 text-lg max-w-2xl mx-auto" style={{ color: '#6F6F6F' }}>
               {t('servicesSubtitle')}
             </p>
           </div>
 
-          <div className="space-y-24">
+          <div className="space-y-0">
             {services.map((service, index) => {
               // eslint-disable-next-line react-hooks/rules-of-hooks
               const animation = useScrollAnimation(0.2);
@@ -152,24 +152,49 @@ const Home = () => {
                   ref={animation.ref}
                   className={`flex flex-col ${
                     index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  } gap-12 items-center ${
-                    index % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'
-                  } ${animation.isVisible ? 'visible' : ''}`}
+                  } gap-0 items-stretch ${animation.isVisible ? 'visible' : ''}`}
+                  style={{ 
+                    backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F7F6F3'
+                  }}
                 >
-                  <div className="flex-1">
-                    <div className="relative overflow-hidden rounded-lg aspect-[4/3] shadow-elegant">
+                  <div 
+                    className={`flex-1 ${
+                      index % 2 === 0 ? 'animate-fade-up' : 'animate-slide-in-right'
+                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ transitionDelay: '0.2s' }}
+                  >
+                    <div className="relative w-full h-full min-h-[400px]">
                       <img
                         src={service.image}
                         alt={service.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-3xl md:text-4xl font-bold mb-4">{service.title}</h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      {service.description}
-                    </p>
+                  <div 
+                    className={`flex-1 flex flex-col justify-center p-12 md:p-16 ${
+                      index % 2 === 0 ? 'animate-slide-in-right' : 'animate-fade-up'
+                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ transitionDelay: '0.4s' }}
+                  >
+                    <div className="max-w-lg">
+                      <h3 
+                        className="text-3xl md:text-4xl font-bold mb-2"
+                        style={{ color: '#1E3D59' }}
+                      >
+                        {service.title}
+                      </h3>
+                      <div 
+                        className="w-16 h-0.5 mb-6"
+                        style={{ backgroundColor: '#C18F59' }}
+                      ></div>
+                      <p 
+                        className="text-lg leading-relaxed"
+                        style={{ color: '#6F6F6F', lineHeight: '1.8' }}
+                      >
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
@@ -185,25 +210,58 @@ const Home = () => {
       <Testimonials />
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-card">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <section id="about" className="py-24 relative overflow-hidden">
+        {/* Marble background */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #F7F6F3 0%, #EAE8E3 50%, #F7F6F3 100%)',
+          }}
+        ></div>
+        
+        <div className="container mx-auto px-4 max-w-4xl relative z-10">
           <div ref={aboutTitle.ref} className={`scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-gradient">
+            {/* Golden line above title */}
+            <div 
+              className="w-24 h-0.5 mx-auto mb-6"
+              style={{ backgroundColor: '#C18F59' }}
+            ></div>
+            <h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-12"
+              style={{ color: '#1E3D59' }}
+            >
               {t('aboutTitle')}
             </h2>
           </div>
-          <div className={`prose prose-lg mx-auto text-muted-foreground scroll-scale ${aboutTitle.isVisible ? 'visible' : ''}`}>
-            <p className="text-lg leading-relaxed mb-6">
+          <div className={`scroll-scale ${aboutTitle.isVisible ? 'visible' : ''}`}>
+            <p 
+              className="text-xl leading-relaxed mb-6 font-semibold text-center"
+              style={{ color: '#1E3D59', lineHeight: '1.8' }}
+            >
               {t('language') === 'de' 
-                ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Berlin und Umgebung. Mit über 20 Jahren Erfahrung vereinen wir traditionelles Handwerk mit modernen Techniken.'
-                : 'Fliesen Demirel Meisterbetrieb is your reliable partner for high-quality tile work in Berlin and surrounding areas. With over 20 years of experience, we combine traditional craftsmanship with modern techniques.'}
+                ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Berlin und Umgebung.'
+                : 'Fliesen Demirel Meisterbetrieb is your reliable partner for high-quality tile work in Berlin and surrounding areas.'}
             </p>
-            <p className="text-lg leading-relaxed mb-6">
+            <p 
+              className="text-lg leading-relaxed mb-6 text-center"
+              style={{ color: '#6F6F6F', lineHeight: '1.8' }}
+            >
+              {t('language') === 'de' 
+                ? 'Mit über 20 Jahren Erfahrung vereinen wir traditionelles Handwerk mit modernen Techniken.'
+                : 'With over 20 years of experience, we combine traditional craftsmanship with modern techniques.'}
+            </p>
+            <p 
+              className="text-lg leading-relaxed mb-6 text-center"
+              style={{ color: '#6F6F6F', lineHeight: '1.8' }}
+            >
               {t('language') === 'de'
                 ? 'Unser erfahrenes Team legt großen Wert auf Präzision, Qualität und Kundenzufriedenheit. Ob privat oder gewerblich – wir realisieren Ihr Fliesenprojekt professionell und termingerecht.'
                 : 'Our experienced team places great emphasis on precision, quality and customer satisfaction. Whether private or commercial - we realize your tile project professionally and on schedule.'}
             </p>
-            <p className="text-lg leading-relaxed">
+            <p 
+              className="text-lg leading-relaxed text-center"
+              style={{ color: '#6F6F6F', lineHeight: '1.8' }}
+            >
               {t('language') === 'de'
                 ? 'Von der Beratung über die Materialauswahl bis zur finalen Ausführung begleiten wir Sie kompetent durch jeden Schritt Ihres Projekts.'
                 : 'From consultation to material selection to final execution, we competently guide you through every step of your project.'}
@@ -214,13 +272,19 @@ const Home = () => {
 
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-background">
+      <section id="contact" className="py-24" style={{ backgroundColor: '#F9F8F6' }}>
         <div className="container mx-auto px-4 max-w-4xl">
           <div ref={contactTitle.ref} className={`scroll-fade-in ${contactTitle.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-gradient">
+            <h2 
+              className="text-4xl md:text-5xl font-bold text-center mb-4"
+              style={{ color: '#1E3D59' }}
+            >
               {t('contactTitle')}
             </h2>
-            <p className="text-center text-muted-foreground mb-16 text-xl">
+            <p 
+              className="text-center mb-16 text-xl"
+              style={{ color: '#6F6F6F' }}
+            >
               {t('contactSubtitle')}
             </p>
           </div>
@@ -229,19 +293,36 @@ const Home = () => {
             {contactInfo.map((item, index) => (
               <Card
                 key={index}
-                className="p-6 hover-lift cursor-pointer border-2 hover:border-accent transition-colors"
+                className="p-6 cursor-pointer border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white"
                 onClick={() => window.open(item.href, item.icon === Globe ? '_blank' : '_self')}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ 
+                  transitionDelay: `${index * 100}ms`,
+                  borderColor: '#E0DED9'
+                }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-accent/10 rounded-lg">
-                    <item.icon className="w-6 h-6 text-accent" />
+                  <div 
+                    className="p-3 rounded-lg group-hover:shadow-lg transition-shadow"
+                    style={{ backgroundColor: 'rgba(193, 143, 89, 0.1)' }}
+                  >
+                    <item.icon 
+                      className="w-6 h-6 transition-all duration-300 hover:scale-110"
+                      style={{ color: '#C18F59' }}
+                    />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div 
+                      className="text-sm mb-1"
+                      style={{ color: '#6F6F6F' }}
+                    >
                       {item.label}
                     </div>
-                    <div className="font-semibold">{item.value}</div>
+                    <div 
+                      className="font-semibold"
+                      style={{ color: '#1E3D59' }}
+                    >
+                      {item.value}
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -249,7 +330,10 @@ const Home = () => {
           </div>
 
           <div className="mt-16 text-center">
-            <p className="text-muted-foreground mb-4">
+            <p 
+              className="mb-4"
+              style={{ color: '#6F6F6F' }}
+            >
               {t('language') === 'de' 
                 ? 'Oder kontaktieren Sie uns direkt über WhatsApp mit dem Button rechts unten!'
                 : 'Or contact us directly via WhatsApp using the button at the bottom right!'}

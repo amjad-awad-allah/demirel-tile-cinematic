@@ -19,13 +19,37 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary text-primary-foreground py-12">
-      <div className="container mx-auto px-4">
+    <footer 
+      className="relative overflow-hidden py-12 text-white"
+      style={{
+        background: 'linear-gradient(135deg, #1E3D59 0%, #283E62 100%)'
+      }}
+    >
+      {/* Marble texture overlay */}
+      <div 
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+        }}
+      ></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-4 gap-12 mb-8">
           {/* Logo & About */}
           <div>
-            <img src={logo} alt="Fliesen Demirel" className="h-16 w-auto mb-4" />
-            <p className="text-sm text-primary-foreground/80 leading-relaxed">
+            <img 
+              src={logo} 
+              alt="Fliesen Demirel" 
+              className="h-16 w-auto mb-4 brightness-0 invert" 
+            />
+            <p 
+              className="text-sm leading-relaxed"
+              style={{ 
+                color: '#CCCCCC',
+                letterSpacing: '0.02em',
+                lineHeight: '1.7'
+              }}
+            >
               {t('language') === 'de'
                 ? 'Ihr verlässlicher Partner für hochwertige Fliesenarbeiten seit über 20 Jahren.'
                 : 'Your reliable partner for high-quality tile work for over 20 years.'}
@@ -34,14 +58,21 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 
+              className="text-lg font-semibold mb-4"
+              style={{ letterSpacing: '0.05em' }}
+            >
               {t('language') === 'de' ? 'Schnelllinks' : 'Quick Links'}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li>
                 <button
                   onClick={() => scrollToSection('home')}
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   {t('home')}
                 </button>
@@ -49,7 +80,11 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('services')}
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   {t('services')}
                 </button>
@@ -57,7 +92,11 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('about')}
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   {t('about')}
                 </button>
@@ -65,7 +104,11 @@ export const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   {t('contact')}
                 </button>
@@ -75,31 +118,57 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 
+              className="text-lg font-semibold mb-4"
+              style={{ letterSpacing: '0.05em' }}
+            >
               {t('language') === 'de' ? 'Kontakt' : 'Contact'}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <Mail 
+                  className="w-5 h-5 mt-0.5 flex-shrink-0"
+                  style={{ color: '#C18F59' }}
+                />
                 <a
                   href="mailto:info@fliesen-demirel.de"
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   info@fliesen-demirel.de
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <Phone 
+                  className="w-5 h-5 mt-0.5 flex-shrink-0"
+                  style={{ color: '#C18F59' }}
+                />
                 <a
                   href="tel:+491234567890"
-                  className="text-sm text-primary-foreground/80 hover:text-accent transition-colors"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
                 >
                   +49 123 456 7890
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-primary-foreground/80">
+                <MapPin 
+                  className="w-5 h-5 mt-0.5 flex-shrink-0"
+                  style={{ color: '#C18F59' }}
+                />
+                <span 
+                  className="text-sm"
+                  style={{ 
+                    color: '#CCCCCC',
+                    letterSpacing: '0.02em'
+                  }}
+                >
                   Musterstraße 123, 12345 Berlin
                 </span>
               </li>
@@ -108,7 +177,10 @@ export const Footer = () => {
 
           {/* Social Media */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 
+              className="text-lg font-semibold mb-4"
+              style={{ letterSpacing: '0.05em' }}
+            >
               {t('language') === 'de' ? 'Folgen Sie uns' : 'Follow Us'}
             </h3>
             <div className="flex gap-4">
@@ -118,7 +190,11 @@ export const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-primary-foreground/10 hover:bg-accent rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  style={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: '#C18F59'
+                  }}
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -129,8 +205,17 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-primary-foreground/20 pt-8 text-center">
-          <p className="text-sm text-primary-foreground/60">
+        <div 
+          className="border-t pt-8 text-center"
+          style={{ borderColor: 'rgba(255, 255, 255, 0.2)' }}
+        >
+          <p 
+            className="text-sm"
+            style={{ 
+              color: '#999999',
+              letterSpacing: '0.02em'
+            }}
+          >
             © {new Date().getFullYear()} Fliesen Demirel Meisterbetrieb. {t('language') === 'de' ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}
           </p>
         </div>

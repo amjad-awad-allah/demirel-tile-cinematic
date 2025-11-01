@@ -91,10 +91,10 @@ export const Portfolio = () => {
             <h2 className="text-4xl md:text-5xl font-semibold mb-4" style={{ color: '#1E3D59' }}>
               {t('language') === 'de' ? 'Unsere Projekte' : 'Our Projects'}
             </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: '#6F6F6F' }}>
+            <p className="text-xl max-w-2xl mx-auto font-medium" style={{ color: '#6F6F6F' }}>
               {t('language') === 'de'
-                ? 'Entdecken Sie unsere Arbeiten – jedes Detail erzählt Qualität.'
-                : 'Discover our work – every detail tells quality.'}
+                ? 'Eleganz in jeder Fliese. Entdecken Sie unsere Handwerkskunst.'
+                : 'Elegance in every tile. Explore our craftsmanship.'}
             </p>
           </div>
 
@@ -269,6 +269,19 @@ export const Portfolio = () => {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* View All Projects Button */}
+          <div className="text-center mt-12">
+            <button
+              className="px-8 py-4 rounded-lg font-semibold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              style={{ 
+                backgroundColor: '#C18F59',
+                fontSize: '1.1rem'
+              }}
+            >
+              {t('language') === 'de' ? 'Alle Projekte ansehen' : 'View All Projects'}
+            </button>
           </div>
         </div>
       </section>

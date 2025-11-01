@@ -24,7 +24,7 @@ All colors MUST be HSL.
     --secondary-foreground: 0 0% 98%;
 
     --muted: 210 10% 88%;
-    --muted-foreground: 210 30% 40%;
+    --muted-foreground: 0 0% 45%;
 
     --accent: 14 93% 58%;
     --accent-foreground: 0 0% 100%;
@@ -45,6 +45,14 @@ All colors MUST be HSL.
     --shadow-elegant: 0 20px 60px -20px hsl(210 51% 25% / 0.25);
     --shadow-glow: 0 0 40px hsl(14 93% 58% / 0.3);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Refined color palette for high-end stone/tile aesthetics */
+    --golden: 35 58% 53%;
+    --golden-light: 35 58% 73%;
+    --stone-bg: 30 15% 97%;
+    --marble-bg: 30 12% 95%;
+    --deep-blue: 210 51% 25%;
+    --text-gray: 0 0% 44%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -110,11 +118,15 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: hsl(var(--text-gray));
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', 'Inter', sans-serif;
     font-weight: 700;
+    color: hsl(var(--deep-blue));
+    letter-spacing: 0.02em;
   }
 
   html {
@@ -187,5 +199,16 @@ All colors MUST be HSL.
   .scroll-scale.visible {
     opacity: 1;
     transform: scale(1);
+  }
+  
+  .fade-bottom {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  
+  .fade-bottom.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

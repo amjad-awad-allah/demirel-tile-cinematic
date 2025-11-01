@@ -19,12 +19,27 @@ export const WhatsAppButton = () => {
   };
 
   return (
-    <Button
-      onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-[9999] w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 bg-[#25D366] hover:bg-[#128C7E] text-white p-0 border-4 border-white"
-      aria-label="Contact via WhatsApp"
-    >
-      <WhatsAppIcon />
-    </Button>
+    <div className="fixed bottom-6 right-6 z-[9999]">
+      {/* Pulsing glow effect */}
+      <div 
+        className="absolute inset-0 rounded-full animate-pulse"
+        style={{
+          backgroundColor: '#25D366',
+          opacity: 0.4,
+          filter: 'blur(12px)',
+        }}
+      ></div>
+      
+      <Button
+        onClick={handleWhatsAppClick}
+        className="relative w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 bg-[#25D366] hover:bg-[#128C7E] text-white p-0 border-4 border-white"
+        style={{
+          boxShadow: '0 0 20px rgba(37, 211, 102, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3)'
+        }}
+        aria-label="Contact via WhatsApp"
+      >
+        <WhatsAppIcon />
+      </Button>
+    </div>
   );
 };
