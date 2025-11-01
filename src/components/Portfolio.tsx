@@ -122,8 +122,8 @@ export const Portfolio = () => {
                     alt={projects[0].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[0].title}
                     </h3>
@@ -148,8 +148,8 @@ export const Portfolio = () => {
                     alt={projects[1].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[1].title}
                     </h3>
@@ -178,8 +178,8 @@ export const Portfolio = () => {
                     alt={projects[2].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[2].title}
                     </h3>
@@ -204,8 +204,8 @@ export const Portfolio = () => {
                     alt={projects[3].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[3].title}
                     </h3>
@@ -234,8 +234,8 @@ export const Portfolio = () => {
                     alt={projects[4].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[4].title}
                     </h3>
@@ -260,8 +260,8 @@ export const Portfolio = () => {
                     alt={projects[5].title}
                     className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6"
-                    style={{ backgroundColor: 'rgba(193,143,89,0.25)' }}>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-end p-6"
+                    style={{ backgroundColor: 'rgba(232, 117, 43, 0.25)' }}>
                     <h3 className="text-lg font-semibold" style={{ color: '#1E3D59' }}>
                       {projects[5].title}
                     </h3>
@@ -274,9 +274,9 @@ export const Portfolio = () => {
           {/* View All Projects Button */}
           <div className="text-center mt-12">
             <button
-              className="px-8 py-4 rounded-lg font-semibold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              className="px-8 py-4 rounded-lg font-semibold text-white transition-all duration-300 hover:shadow-xl hover:scale-105"
               style={{ 
-                backgroundColor: '#C18F59',
+                background: 'linear-gradient(90deg, #E8752B, #D66C28)',
                 fontSize: '1.1rem'
               }}
             >
@@ -303,7 +303,7 @@ export const Portfolio = () => {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="font-semibold px-3 py-1 rounded-full text-sm" 
-                  style={{ backgroundColor: 'rgba(193,143,89,0.2)', color: '#1E3D59' }}>
+                  style={{ backgroundColor: 'rgba(232, 117, 43, 0.2)', color: '#1E3D59' }}>
                   {selectedProject?.category}
                 </span>
                 <span style={{ color: '#6F6F6F' }}>• {selectedProject?.location}</span>

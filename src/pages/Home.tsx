@@ -88,13 +88,15 @@ const Home = () => {
             />
           </div>
           
-          {/* Semi-transparent overlay behind text with golden border */}
+          {/* Semi-transparent overlay behind text with orange border */}
           <div className="relative">
             <div 
-              className="absolute inset-0 -m-8 bg-white/40 backdrop-blur-sm rounded-3xl"
+              className="absolute inset-0 -m-8 rounded-3xl"
               style={{
-                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.08)',
-                borderTop: '2px solid #C18F59'
+                backgroundColor: 'rgba(255, 255, 255, 0.87)',
+                backdropFilter: 'blur(8px)',
+                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.08)',
+                borderTop: '2px solid #E8752B'
               }}
             ></div>
             
@@ -114,13 +116,23 @@ const Home = () => {
               <Button 
                 onClick={scrollToContact}
                 size="lg" 
-                className="bg-accent hover:bg-[hsl(var(--accent-hover))] text-white shadow-glow animate-fade-in group transition-all duration-300 relative overflow-hidden"
+                className="text-white animate-fade-in group transition-all duration-300 relative overflow-hidden border-0 hover:scale-105 hover:shadow-2xl"
+                style={{
+                  background: 'linear-gradient(90deg, #E8752B, #D66C28)',
+                  boxShadow: '0 4px 14px rgba(232, 117, 43, 0.4)'
+                }}
               >
                 <span className="relative z-10 flex items-center">
                   {t('heroButton')}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-accent to-[hsl(var(--accent-hover))] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{
+                    background: 'linear-gradient(90deg, #D66C28, #C85F22)',
+                    boxShadow: '0 0 20px rgba(232, 117, 43, 0.6)'
+                  }}
+                ></span>
               </Button>
             </div>
           </div>
@@ -131,7 +143,7 @@ const Home = () => {
       <WhyUs />
 
       {/* Services Section */}
-      <section id="services" className="py-24" style={{ backgroundColor: '#F9F8F6' }}>
+      <section id="services" className="py-24" style={{ backgroundColor: '#FAF9F7' }}>
         <div className="max-w-7xl mx-auto px-4">
           <div ref={servicesTitle.ref} className={`scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-4" style={{ color: '#1E3D59' }}>
@@ -185,8 +197,8 @@ const Home = () => {
                         {service.title}
                       </h3>
                       <div 
-                        className="w-16 h-0.5 mb-6"
-                        style={{ backgroundColor: '#C18F59' }}
+                        className="w-10 h-0.5 mb-6"
+                        style={{ backgroundColor: '#E8752B' }}
                       ></div>
                       <p 
                         className="text-lg leading-relaxed"
@@ -211,20 +223,20 @@ const Home = () => {
 
       {/* About Section */}
       <section id="about" className="py-24 relative overflow-hidden">
-        {/* Marble background */}
+        {/* Top-to-bottom gradient background */}
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, #F7F6F3 0%, #EAE8E3 50%, #F7F6F3 100%)',
+            background: 'linear-gradient(180deg, #FFFFFF 0%, #FAF9F7 100%)',
           }}
         ></div>
         
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
           <div ref={aboutTitle.ref} className={`scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
-            {/* Golden line above title */}
+            {/* Orange line above title */}
             <div 
               className="w-24 h-0.5 mx-auto mb-6"
-              style={{ backgroundColor: '#C18F59' }}
+              style={{ backgroundColor: '#E8752B' }}
             ></div>
             <h2 
               className="text-4xl md:text-5xl font-bold text-center mb-12"
@@ -302,12 +314,14 @@ const Home = () => {
               >
                 <div className="flex items-start gap-4">
                   <div 
-                    className="p-3 rounded-lg group-hover:shadow-lg transition-shadow"
-                    style={{ backgroundColor: 'rgba(193, 143, 89, 0.1)' }}
+                    className="p-3 rounded-lg transition-all duration-300"
+                    style={{ 
+                      backgroundColor: 'rgba(232, 117, 43, 0.1)',
+                    }}
                   >
                     <item.icon 
                       className="w-6 h-6 transition-all duration-300 hover:scale-110"
-                      style={{ color: '#C18F59' }}
+                      style={{ color: '#E8752B' }}
                     />
                   </div>
                   <div className="flex-1">
@@ -338,6 +352,22 @@ const Home = () => {
                 ? 'Oder kontaktieren Sie uns direkt über WhatsApp mit dem Button rechts unten!'
                 : 'Or contact us directly via WhatsApp using the button at the bottom right!'}
             </p>
+          </div>
+
+          {/* Google Map Embed */}
+          <div className="mt-12">
+            <div className="relative w-full h-96 rounded-xl overflow-hidden shadow-lg border-2" style={{ borderColor: '#E0DED9' }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.4092093678496!2d13.404953999999999!3d52.520008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBerlin%2C%20Germany!5e0!3m2!1sen!2sus!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Fliesen Demirel Location"
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
