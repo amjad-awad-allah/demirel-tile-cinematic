@@ -74,6 +74,8 @@ const Tile = ({ position, delay, color }: TileProps) => {
           roughness={0.2}
           metalness={0.1}
           envMapIntensity={0.5}
+          transparent={true}
+          opacity={0.4}
         />
       </mesh>
     </Float>
@@ -84,9 +86,9 @@ const TileGrid = () => {
   const tiles = useMemo(() => {
     const result = [];
     const colors = [
-      '#ffffff', '#fefefe', '#f9f9f9', '#f5f5f5',
-      '#f0f0f0', '#ebebeb', '#e8e8e8', '#d9d9d9',
-      '#cccccc', '#f7f7f7'
+      '#ffffff', '#ffffff', '#fefefe', '#fcfcfc',
+      '#fafafa', '#f9f9f9', '#f7f7f7', '#f5f5f5',
+      '#f3f3f3', '#f0f0f0'
     ];
 
     let delayCounter = 0;
