@@ -1,18 +1,26 @@
-import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from './ui/button';
 import logo from '@/assets/logo-transparent.svg';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
-  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
     { id: 'home', label: t('home') },
+    { id: 'why-us', label: t('whyUs') },
     { id: 'services', label: t('services') },
+    { id: 'portfolio', label: t('portfolio') },
+    { id: 'testimonials', label: t('testimonials') },
     { id: 'about', label: t('about') },
     { id: 'contact', label: t('contact') },
   ];
@@ -24,6 +32,32 @@ export const Navigation = () => {
       setMobileMenuOpen(false);
     }
   };
+
+  // Scroll spy effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => item.id);
+      const scrollPosition = window.scrollY + 100;
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -38,34 +72,44 @@ export const Navigation = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-sm font-medium transition-colors hover:text-accent text-foreground"
+                className={`text-sm font-medium transition-colors hover:text-accent relative ${
+                  activeSection === item.id 
+                    ? 'text-accent after:absolute after:bottom-[-8px] after:left-0 after:right-0 after:h-0.5 after:bg-accent' 
+                    : 'text-foreground'
+                }`}
               >
                 {item.label}
               </button>
             ))}
 
-            {/* Language Switcher */}
-            <div className="flex gap-2">
-              <Button
-                variant={language === 'en' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('en')}
-              >
-                EN
-              </Button>
-              <Button
-                variant={language === 'de' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('de')}
-              >
-                DE
-              </Button>
-            </div>
+            {/* Language Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  {language === 'de' ? '🇩🇪 DE' : '🇬🇧 EN'}
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-background border-border">
+                <DropdownMenuItem 
+                  onClick={() => setLanguage('de')}
+                  className={language === 'de' ? 'bg-accent/10 text-accent font-medium' : ''}
+                >
+                  🇩🇪 Deutsch
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => setLanguage('en')}
+                  className={language === 'en' ? 'bg-accent/10 text-accent font-medium' : ''}
+                >
+                  🇬🇧 English
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,26 +128,40 @@ export const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left py-3 text-sm font-medium transition-colors hover:text-accent text-foreground"
+                className={`block w-full text-left py-3 text-sm font-medium transition-colors ${
+                  activeSection === item.id 
+                    ? 'text-accent font-semibold' 
+                    : 'text-foreground hover:text-accent'
+                }`}
               >
                 {item.label}
               </button>
             ))}
-            <div className="flex gap-2 mt-4">
-              <Button
-                variant={language === 'en' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('en')}
-              >
-                EN
-              </Button>
-              <Button
-                variant={language === 'de' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setLanguage('de')}
-              >
-                DE
-              </Button>
+            
+            {/* Mobile Language Selector */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="w-full gap-2">
+                    {language === 'de' ? '🇩🇪 Deutsch' : '🇬🇧 English'}
+                    <ChevronDown className="h-4 w-4 ml-auto" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="w-full bg-background border-border">
+                  <DropdownMenuItem 
+                    onClick={() => setLanguage('de')}
+                    className={language === 'de' ? 'bg-accent/10 text-accent font-medium' : ''}
+                  >
+                    🇩🇪 Deutsch
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => setLanguage('en')}
+                    className={language === 'en' ? 'bg-accent/10 text-accent font-medium' : ''}
+                  >
+                    🇬🇧 English
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         )}

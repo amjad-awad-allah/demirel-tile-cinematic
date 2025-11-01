@@ -12,7 +12,10 @@ const translations = {
   en: {
     // Navigation
     home: 'Home',
+    whyUs: 'Why Us',
     services: 'Services',
+    portfolio: 'Portfolio',
+    testimonials: 'Testimonials',
     about: 'About',
     contact: 'Contact',
     
@@ -48,7 +51,10 @@ const translations = {
   de: {
     // Navigation
     home: 'Startseite',
+    whyUs: 'Warum wir',
     services: 'Leistungen',
+    portfolio: 'Portfolio',
+    testimonials: 'Referenzen',
     about: 'Über uns',
     contact: 'Kontakt',
     
@@ -86,7 +92,7 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('de');
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.en] || key;

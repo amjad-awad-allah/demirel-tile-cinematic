@@ -116,7 +116,9 @@ const Home = () => {
       </section>
 
       {/* Why Us Section */}
-      <WhyUs />
+      <div id="why-us">
+        <WhyUs />
+      </div>
 
       {/* Services Section */}
       <section id="services" className="py-24 bg-background">
@@ -167,10 +169,14 @@ const Home = () => {
       </section>
 
       {/* Portfolio Section */}
-      <Portfolio />
+      <div id="portfolio">
+        <Portfolio />
+      </div>
 
       {/* Testimonials Section */}
-      <Testimonials />
+      <div id="testimonials">
+        <Testimonials />
+      </div>
 
       {/* About Section */}
       <section id="about" className="py-24 bg-card">
