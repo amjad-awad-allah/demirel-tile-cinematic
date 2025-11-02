@@ -79,19 +79,19 @@ const Home = () => {
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
         <Hero3DAnimation />
         
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <div className="mb-12 animate-fade-in">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
+          <div className="mb-6 sm:mb-8 md:mb-12 animate-fade-in">
             <img 
               src={logo} 
               alt="Fliesen Demirel" 
-              className="h-48 md:h-64 lg:h-72 w-auto mx-auto drop-shadow-2xl"
+              className="h-32 sm:h-40 md:h-56 lg:h-72 w-auto mx-auto drop-shadow-2xl"
             />
           </div>
           
           {/* Semi-transparent overlay behind text with orange border */}
           <div className="relative">
             <div 
-              className="absolute inset-0 -m-8 rounded-3xl"
+              className="absolute inset-0 -m-4 sm:-m-6 md:-m-8 rounded-2xl sm:rounded-3xl"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.87)',
                 backdropFilter: 'blur(8px)',
@@ -100,23 +100,23 @@ const Home = () => {
               }}
             ></div>
             
-            <div className="relative">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-5 text-primary animate-fade-in drop-shadow-lg">
+            <div className="relative px-2 sm:px-4">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 md:mb-5 text-primary animate-fade-in drop-shadow-lg">
                 {t('heroTitle')}
               </h1>
               
-              <p className="text-lg md:text-xl lg:text-2xl mb-4 text-primary/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-3 sm:mb-4 text-primary/90 animate-fade-in drop-shadow-md max-w-3xl mx-auto">
                 {t('heroSubtitle')}
               </p>
               
-              <p className="text-base md:text-lg mb-10 text-primary/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10 text-primary/80 animate-fade-in drop-shadow-md max-w-2xl mx-auto">
                 {t('heroDescription')}
               </p>
               
               <Button 
                 onClick={scrollToContact}
                 size="lg" 
-                className="text-white animate-fade-in group transition-all duration-300 relative overflow-hidden border-0 hover:scale-105 hover:shadow-2xl"
+                className="text-white animate-fade-in group transition-all duration-300 relative overflow-hidden border-0 hover:scale-105 hover:shadow-2xl text-sm sm:text-base px-6 sm:px-8"
                 style={{
                   background: 'linear-gradient(90deg, #E8752B, #D66C28)',
                   boxShadow: '0 4px 14px rgba(232, 117, 43, 0.4)'
@@ -124,7 +124,7 @@ const Home = () => {
               >
                 <span className="relative z-10 flex items-center">
                   {t('heroButton')}
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
                 </span>
                 <span 
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
