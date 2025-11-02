@@ -25,6 +25,12 @@ export const Footer = () => {
         background: 'linear-gradient(135deg, #1E3D59 0%, #283E62 100%)'
       }}
     >
+      {/* Orange divider line */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-0.5"
+        style={{ backgroundColor: '#E8752B' }}
+      ></div>
+
       {/* Marble texture overlay */}
       <div 
         className="absolute inset-0 opacity-10"

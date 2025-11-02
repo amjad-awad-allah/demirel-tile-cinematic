@@ -139,11 +139,12 @@ const Home = () => {
       {/* Services Section */}
       <section id="services" className="py-24" style={{ backgroundColor: '#FAF9F7' }}>
         <div className="max-w-7xl mx-auto px-4">
-          <div ref={servicesTitle.ref} className={`scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4" style={{ color: '#1E3D59' }}>
+          <div ref={servicesTitle.ref} className={`text-center mb-16 scroll-fade-in ${servicesTitle.isVisible ? 'visible' : ''}`}>
+            <div className="section-underline mx-auto"></div>
+            <h2 className="section-title mb-4">
               {t('servicesTitle')}
             </h2>
-            <p className="text-center mb-16 text-lg max-w-2xl mx-auto" style={{ color: '#6F6F6F' }}>
+            <p className="section-subtitle text-lg max-w-2xl mx-auto">
               {t('servicesSubtitle')}
             </p>
           </div>
@@ -226,16 +227,9 @@ const Home = () => {
         ></div>
         
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
-          <div ref={aboutTitle.ref} className={`scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
-            {/* Orange line above title */}
-            <div 
-              className="w-24 h-0.5 mx-auto mb-6"
-              style={{ backgroundColor: '#E8752B' }}
-            ></div>
-            <h2 
-              className="text-4xl md:text-5xl font-bold text-center mb-12"
-              style={{ color: '#1E3D59' }}
-            >
+          <div ref={aboutTitle.ref} className={`text-center mb-12 scroll-fade-in ${aboutTitle.isVisible ? 'visible' : ''}`}>
+            <div className="section-underline mx-auto"></div>
+            <h2 className="section-title mb-4">
               {t('aboutTitle')}
             </h2>
           </div>
@@ -277,69 +271,100 @@ const Home = () => {
       </section>
 
 
-      {/* Contact Section */}
-      <section id="contact" className="py-24" style={{ backgroundColor: '#F9F8F6' }}>
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div ref={contactTitle.ref} className={`scroll-fade-in ${contactTitle.isVisible ? 'visible' : ''}`}>
-            <h2 
-              className="text-4xl md:text-5xl font-bold text-center mb-4"
-              style={{ color: '#1E3D59' }}
-            >
+      {/* Contact Section - Marble Tiling Theme */}
+      <section id="contact" className="py-24 relative overflow-hidden marble-texture">
+        {/* Gradient overlay for depth */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(160deg, rgba(250, 249, 247, 0.92) 0%, rgba(243, 240, 236, 0.92) 100%)',
+          }}
+        ></div>
+
+        <div className="container mx-auto px-4 max-w-5xl relative z-10">
+          <div ref={contactTitle.ref} className={`text-center mb-8 scroll-fade-in ${contactTitle.isVisible ? 'visible' : ''}`}>
+            <div className="section-underline mx-auto"></div>
+            <h2 className="section-title mb-3">
               {t('contactTitle')}
             </h2>
+            <p className="section-subtitle text-xl mb-2">
+              {t('language') === 'de' 
+                ? 'Bereit, Ihren Raum zu verwandeln?'
+                : 'Ready to transform your space?'}
+            </p>
             <p 
-              className="text-center mb-16 text-xl"
-              style={{ color: '#6F6F6F' }}
+              className="text-sm italic mt-4"
+              style={{ color: '#999999' }}
             >
-              {t('contactSubtitle')}
+              {t('language') === 'de' 
+                ? 'Wir freuen uns auf Ihr Projekt.'
+                : 'We look forward to your project.'}
             </p>
           </div>
 
-          <div className={`grid md:grid-cols-2 gap-6 scroll-scale ${contactTitle.isVisible ? 'visible' : ''}`}>
+          {/* Contact Tile Cards */}
+          <div className={`flex flex-wrap justify-center gap-6 mb-12 scroll-scale ${contactTitle.isVisible ? 'visible' : ''}`}>
             {contactInfo.map((item, index) => (
-              <Card
+              <div
                 key={index}
-                className="p-6 cursor-pointer border-2 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white"
-                onClick={() => window.open(item.href, item.icon === Globe ? '_blank' : '_self')}
+                className="contact-tile-card p-6 cursor-pointer tile-animate"
+                onClick={() => window.open(item.href, '_self')}
                 style={{ 
-                  transitionDelay: `${index * 100}ms`,
-                  borderColor: '#E0DED9'
+                  animationDelay: `${index * 100}ms`,
                 }}
               >
-                <div className="flex items-start gap-4">
-                  <div 
-                    className="p-3 rounded-lg transition-all duration-300"
-                    style={{ 
-                      backgroundColor: 'rgba(232, 117, 43, 0.1)',
-                    }}
-                  >
+                <div className="flex items-center gap-4">
+                  <div className="contact-icon-bg">
                     <item.icon 
-                      className="w-6 h-6 transition-all duration-300 hover:scale-110"
+                      className="w-5 h-5"
                       style={{ color: '#E8752B' }}
                     />
                   </div>
                   <div className="flex-1">
                     <div 
-                      className="text-sm mb-1"
-                      style={{ color: '#6F6F6F' }}
+                      className="text-xs uppercase tracking-wider mb-1"
+                      style={{ color: '#999999' }}
                     >
                       {item.label}
                     </div>
                     <div 
-                      className="font-semibold"
+                      className="font-semibold text-sm"
                       style={{ color: '#1E3D59' }}
                     >
                       {item.value}
                     </div>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
 
-          <div className="mt-16 text-center">
+          {/* Map with Marble Frame */}
+          <div className={`scroll-scale ${contactTitle.isVisible ? 'visible' : ''}`}>
+            <div 
+              className="relative w-full h-96 overflow-hidden"
+              style={{ 
+                borderRadius: '20px',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
+                border: '3px solid rgba(232, 117, 43, 0.15)'
+              }}
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.4092093678496!2d13.404953999999999!3d52.520008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBerlin%2C%20Germany!5e0!3m2!1sen!2sus!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Fliesen Demirel Location"
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
             <p 
-              className="mb-4"
+              className="text-sm"
               style={{ color: '#6F6F6F' }}
             >
               {t('language') === 'de' 
@@ -347,7 +372,6 @@ const Home = () => {
                 : 'Or contact us directly via WhatsApp using the button at the bottom right!'}
             </p>
           </div>
-
         </div>
       </section>
 

@@ -253,6 +253,15 @@ export const Hero3DAnimation = () => {
         }}
       />
       
+      {/* Diagonal sweep reflection glow */}
+      <div 
+        className="absolute inset-0 pointer-events-none diagonal-sweep"
+        style={{
+          background: 'linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.5) 48%, rgba(232, 117, 43, 0.15) 50%, rgba(255, 255, 255, 0.5) 52%, transparent 100%)',
+          backgroundSize: '200% 200%',
+        }}
+      />
+      
       <Canvas
         camera={{ position: [0, 0, 18], fov: 50 }}
         gl={{ 
