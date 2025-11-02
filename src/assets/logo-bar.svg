@@ -1,0 +1,25 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508 196" width="508" height="196">
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #1e3a5f } 
+		.s1 { fill: #ff6b35 } 
+		.s2 { opacity: .82;fill: #3d5a80 } 
+		.t3 { font-size: 80px;fill: #1e3a5f;font-family: "Arial" } 
+		.t4 { font-size: 62px;fill: #3d5a80;font-family: "Arial" } 
+	</style>
+	<g>
+		<path fill-rule="evenodd" class="s0" d="m32.45 60.61l68.94-12.16 12.16 68.94-68.94 12.16z"/>
+		<path fill-rule="evenodd" class="s1" d="m84.61 35.45l68.94 12.16-12.16 68.94-68.94-12.16z"/>
+		<path fill-rule="evenodd" class="s2" d="m60 74h70v70h-70z"/>
+	</g>
+	<g>
+		<text id="FLIESEN" style="transform: matrix(1,0,0,1,178,89)" >
+			<tspan x="0" y="0" class="t3">FLIESEN
+</tspan>
+		</text>
+		<text id="Demirel" style="transform: matrix(1,0,0,1,183,164)" >
+			<tspan x="0" y="0" class="t4">Demirel
+</tspan>
+		</text>
+	</g>
+</svg>

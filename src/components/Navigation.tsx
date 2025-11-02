@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from './ui/button';
-import logo from '@/assets/logo-transparent.svg';
+import logo from '@/assets/logo-bar.svg';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
