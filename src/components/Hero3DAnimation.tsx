@@ -3,17 +3,28 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
+// Import tile interior photos
+import tile1 from '@/assets/hero-tile-1.jpg';
+import tile2 from '@/assets/hero-tile-2.jpg';
+import tile3 from '@/assets/hero-tile-3.jpg';
+import tile4 from '@/assets/hero-tile-4.jpg';
+import tile5 from '@/assets/hero-tile-5.jpg';
+import tile6 from '@/assets/hero-tile-6.jpg';
+import tile7 from '@/assets/hero-tile-7.jpg';
+import tile8 from '@/assets/hero-tile-8.jpg';
+
 interface TileProps {
   position: [number, number, number];
   rotation: [number, number, number];
   delay: number;
   color: string;
   size: [number, number, number];
+  imageUrl: string;
 }
 
-const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
+const Tile = ({ position, rotation, delay, color, size, imageUrl }: TileProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
   
   const initialPosition = useMemo(() => {
     return [
@@ -24,85 +35,47 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
   }, [position]);
 
   useEffect(() => {
-    // Create warm beige marble texture with elegant, natural appearance
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024;
-    canvas.height = 1024;
-    const ctx = canvas.getContext('2d');
-    
-    if (ctx) {
-      // Darker warm marble base gradient (#E2DDD6 → #D6CFC8)
-      const baseGradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 1024);
-      baseGradient.addColorStop(0, '#EBE6DF');
-      baseGradient.addColorStop(0.25, '#E2DDD6');
-      baseGradient.addColorStop(0.5, '#DDD8D1');
-      baseGradient.addColorStop(0.75, '#DAD3CC');
-      baseGradient.addColorStop(1, '#D6CFC8');
-      ctx.fillStyle = baseGradient;
-      ctx.fillRect(0, 0, 1024, 1024);
+    // Load image texture and apply warm overlay for brand consistency
+    const loader = new THREE.TextureLoader();
+    loader.load(imageUrl, (loadedTexture) => {
+      // Create canvas for overlay effect
+      const canvas = document.createElement('canvas');
+      const size = 2048;
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
       
-      // Enhanced warm marble veining (+15% visibility)
-      ctx.globalCompositeOperation = 'multiply';
-      for (let i = 0; i < 15; i++) {
-        ctx.strokeStyle = `rgba(200, 190, 175, ${0.07 + Math.random() * 0.08})`;
-        ctx.lineWidth = 1 + Math.random() * 1.5;
-        ctx.beginPath();
-        ctx.moveTo(Math.random() * 1024, 0);
-        for (let j = 0; j < 5; j++) {
-          ctx.bezierCurveTo(
-            Math.random() * 1024, Math.random() * 256 * (j + 1),
-            Math.random() * 1024, Math.random() * 256 * (j + 1),
-            Math.random() * 1024, 256 * (j + 1)
-          );
-        }
-        ctx.stroke();
+      if (ctx) {
+        // Draw the loaded image
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, size, size);
+          
+          // Apply warm beige overlay for uniformity (rgba(245,244,242,0.85))
+          ctx.fillStyle = 'rgba(245, 244, 242, 0.85)';
+          ctx.globalCompositeOperation = 'soft-light';
+          ctx.fillRect(0, 0, size, size);
+          
+          // Subtle vignette for depth
+          const vignette = ctx.createRadialGradient(size/2, size/2, size*0.3, size/2, size/2, size*0.7);
+          vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+          vignette.addColorStop(1, 'rgba(0, 0, 0, 0.08)');
+          ctx.globalCompositeOperation = 'multiply';
+          ctx.fillStyle = vignette;
+          ctx.fillRect(0, 0, size, size);
+          
+          // Create texture from canvas
+          const finalTexture = new THREE.CanvasTexture(canvas);
+          finalTexture.wrapS = THREE.ClampToEdgeWrapping;
+          finalTexture.wrapT = THREE.ClampToEdgeWrapping;
+          finalTexture.anisotropy = 16;
+          setTexture(finalTexture);
+        };
+        img.src = imageUrl;
       }
-      ctx.globalCompositeOperation = 'source-over';
-      
-      // Fine warm crystalline grain (ceramic quality with beige tone)
-      for (let i = 0; i < 4500; i++) {
-        const x = Math.random() * 1024;
-        const y = Math.random() * 1024;
-        const brightness = Math.random() * 15 + 235;
-        const warmth = Math.random() * 8;
-        const alpha = Math.random() * 0.1 + 0.06;
-        ctx.fillStyle = `rgba(${brightness + warmth}, ${brightness}, ${brightness - warmth}, ${alpha})`;
-        ctx.fillRect(x, y, 1, 1);
-      }
-      
-      // Natural warm stone speckles (beige/taupe mineral deposits)
-      for (let i = 0; i < 120; i++) {
-        const x = Math.random() * 1024;
-        const y = Math.random() * 1024;
-        const size = Math.random() * 2.5 + 0.8;
-        const tone = 195 + Math.random() * 30;
-        ctx.fillStyle = `rgba(${tone + 10}, ${tone}, ${tone - 10}, 0.12)`;
-        ctx.beginPath();
-        ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      
-      // Subtle polished highlights (warm glow)
-      ctx.globalCompositeOperation = 'screen';
-      for (let i = 0; i < 25; i++) {
-        const x = Math.random() * 1024;
-        const y = Math.random() * 1024;
-        const radius = Math.random() * 35 + 18;
-        const highlight = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        highlight.addColorStop(0, 'rgba(255, 250, 240, 0.06)');
-        highlight.addColorStop(1, 'rgba(255, 250, 240, 0)');
-        ctx.fillStyle = highlight;
-        ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-      }
-      ctx.globalCompositeOperation = 'source-over';
-      
-      const canvasTexture = new THREE.CanvasTexture(canvas);
-      canvasTexture.wrapS = THREE.RepeatWrapping;
-      canvasTexture.wrapT = THREE.RepeatWrapping;
-      canvasTexture.anisotropy = 16;
-      setTexture(canvasTexture);
-    }
-  }, []);
+    });
+  }, [imageUrl]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -164,11 +137,11 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       <meshStandardMaterial
         map={texture}
         color={color}
-        roughness={0.4}
+        roughness={0.35}
         metalness={0.05}
-        envMapIntensity={1.1}
+        envMapIntensity={1.0}
         transparent={true}
-        opacity={Math.max(0.85, depthOpacity)}
+        opacity={Math.max(0.88, depthOpacity)}
       />
     </mesh>
   );
@@ -176,16 +149,19 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
 
 const TileGrid = () => {
   const tiles = useMemo(() => {
-    // Darker marble palette with enhanced contrast
+    // Interior photo textures showcasing Fliesen Demirel craftsmanship
+    const tileImages = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8];
+    
+    // Warm neutral base colors with orange accent on tile 7
     const colors = [
-      '#E2DDD6', // Primary: Darker warm marble
-      '#D6CFC8', // Secondary: Darker warm gray
-      '#E2DDD6', // Primary repeated
-      '#D6CFC8', // Secondary repeated
-      '#E2DDD6', // Primary repeated
-      '#D6CFC8', // Secondary repeated
-      'rgba(232, 117, 43, 0.10)', // Accent: Orange glow (tile 7, 10% opacity)
-      '#E2DDD6', // Primary
+      '#F5F4F2', // Neutral warm base
+      '#F5F4F2',
+      '#F5F4F2',
+      '#F5F4F2',
+      '#F5F4F2',
+      '#F5F4F2',
+      'rgba(232, 117, 43, 0.10)', // Orange accent tile
+      '#F5F4F2',
     ];
     const diagonalAngle = (15 * Math.PI) / 180; // 15 degrees
     
@@ -196,6 +172,7 @@ const TileGrid = () => {
         delay: 0,
         color: colors[0],
         size: [4, 6, 0.3] as [number, number, number],
+        imageUrl: tileImages[0],
       },
       {
         position: [3, 3, -1] as [number, number, number],
@@ -203,6 +180,7 @@ const TileGrid = () => {
         delay: 0.4,
         color: colors[1],
         size: [5, 5, 0.3] as [number, number, number],
+        imageUrl: tileImages[1],
       },
       {
         position: [-2, -3, 0] as [number, number, number],
@@ -210,41 +188,47 @@ const TileGrid = () => {
         delay: 0.8,
         color: colors[2],
         size: [4.5, 5.5, 0.3] as [number, number, number],
+        imageUrl: tileImages[2],
       },
       {
         position: [5, -2, 1] as [number, number, number],
         rotation: [-0.1, 0.1, diagonalAngle] as [number, number, number],
         delay: 1.2,
-        color: colors[0],
+        color: colors[3],
         size: [5, 4, 0.3] as [number, number, number],
+        imageUrl: tileImages[3],
       },
       {
         position: [0, 0, -3] as [number, number, number],
         rotation: [0.05, -0.05, diagonalAngle] as [number, number, number],
         delay: 1.6,
-        color: colors[3],
+        color: colors[4],
         size: [6, 4.5, 0.3] as [number, number, number],
+        imageUrl: tileImages[4],
       },
       {
         position: [-5, -1, 2] as [number, number, number],
         rotation: [-0.08, 0.08, diagonalAngle] as [number, number, number],
         delay: 2.0,
-        color: colors[2],
+        color: colors[5],
         size: [4, 5, 0.3] as [number, number, number],
+        imageUrl: tileImages[5],
       },
       {
         position: [2, -4, -1] as [number, number, number],
         rotation: [0.1, -0.1, diagonalAngle] as [number, number, number],
         delay: 2.4,
-        color: colors[1],
+        color: colors[6],
         size: [5.5, 4.5, 0.3] as [number, number, number],
+        imageUrl: tileImages[6],
       },
       {
         position: [-3, 4, 1] as [number, number, number],
         rotation: [-0.05, 0.08, diagonalAngle] as [number, number, number],
         delay: 2.8,
-        color: colors[3],
+        color: colors[7],
         size: [4.5, 5, 0.3] as [number, number, number],
+        imageUrl: tileImages[7],
       },
     ];
   }, []);
@@ -285,11 +269,12 @@ export const Hero3DAnimation = () => {
         {/* HDRI Environment for realistic reflections */}
         <Environment preset="studio" />
         
-        {/* Reduced lighting for better contrast and depth */}
-        <ambientLight intensity={0.4} color="#FFFAF5" />
+        {/* Warm soft lighting for elegant interior showcase */}
+        <ambientLight intensity={0.45} color="#FFF6EA" />
         <directionalLight
           position={[-12, 15, 10]}
           intensity={1.1}
+          color="#FFF4E6"
           castShadow
           shadow-mapSize={[4096, 4096]}
           shadow-camera-far={50}
@@ -299,7 +284,6 @@ export const Hero3DAnimation = () => {
           shadow-camera-bottom={-25}
           shadow-bias={-0.00015}
           shadow-radius={10}
-          color="#FFF6EA"
         />
         <directionalLight 
           position={[8, -4, -5]} 
