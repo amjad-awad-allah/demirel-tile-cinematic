@@ -59,7 +59,7 @@ const translations = {
     whyUs: 'Warum wir',
     
     // Hero
-    heroTitle: 'Meisterliches Handwerk',
+    heroTitle: 'MEISTERBETRIEB',
     heroSubtitle: 'Premium Keramik- und Fliesenverlegung',
     heroDescription: 'Verwandeln Sie Ihre Räume mit fachlicher Präzision und zeitloser Eleganz',
     heroButton: 'Unsere Arbeit',

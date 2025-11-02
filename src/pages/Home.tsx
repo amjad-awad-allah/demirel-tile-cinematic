@@ -8,7 +8,7 @@ import { WhyUs } from '@/components/WhyUs';
 import { Portfolio } from '@/components/Portfolio';
 import { Testimonials } from '@/components/Testimonials';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import logo from '@/assets/logo-transparent.svg';
+import logo from '@/assets/logo-no-slogan.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
 import bathroomTiles from '@/assets/bathroom-tiles.jpg';
 import kitchenTiles from '@/assets/kitchen-tiles.jpg';
@@ -339,28 +339,6 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Map with Marble Frame */}
-          <div className={`scroll-scale ${contactTitle.isVisible ? 'visible' : ''}`}>
-            <div 
-              className="relative w-full h-96 overflow-hidden"
-              style={{ 
-                borderRadius: '20px',
-                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.06)',
-                border: '3px solid rgba(232, 117, 43, 0.15)'
-              }}
-            >
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.4092093678496!2d13.404953999999999!3d52.520008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBerlin%2C%20Germany!5e0!3m2!1sen!2sus!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Fliesen Demirel Location"
-              ></iframe>
-            </div>
-          </div>
 
           <div className="mt-8 text-center">
             <p 

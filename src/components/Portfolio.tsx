@@ -77,14 +77,11 @@ export const Portfolio = () => {
     }}>
         <div className="container mx-auto px-4">
           <div ref={animation.ref} className={`scroll-fade-in ${animation.isVisible ? 'visible' : ''} text-center mb-16`}>
-            <h2 className="text-4xl md:text-5xl font-semibold mb-4" style={{
-            color: '#1E3D59'
-          }}>
+            <div className="section-underline mx-auto"></div>
+            <h2 className="section-title mb-4">
               {t('language') === 'de' ? 'Unsere Projekte' : 'Our Projects'}
             </h2>
-            <p className="text-xl max-w-2xl mx-auto font-medium" style={{
-            color: '#6F6F6F'
-          }}>
+            <p className="section-subtitle text-lg max-w-2xl mx-auto">
               {t('language') === 'de' ? 'Eleganz in jeder Fliese. Entdecken Sie unsere Handwerkskunst.' : 'Elegance in every tile. Explore our craftsmanship.'}
             </p>
           </div>
@@ -217,36 +214,22 @@ export const Portfolio = () => {
         </div>
       </section>
 
-      {/* Project Details Modal */}
+      {/* Project Image Modal - Only Image Display */}
       <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto animate-in fade-in-0 slide-in-from-bottom-4 duration-400">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold" style={{
-            color: '#1E3D59'
-          }}>
-              {selectedProject?.title}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <img src={selectedProject?.image} alt={selectedProject?.title} className="w-full rounded-lg" />
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold px-3 py-1 rounded-full text-sm" style={{
-                backgroundColor: 'rgba(232, 117, 43, 0.2)',
-                color: '#1E3D59'
-              }}>
-                  {selectedProject?.category}
-                </span>
-                <span style={{
-                color: '#6F6F6F'
-              }}>• {selectedProject?.location}</span>
-              </div>
-              <p className="text-base" style={{
-              color: '#6F6F6F'
-            }}>
-                {selectedProject?.description}
-              </p>
-            </div>
+        <DialogContent className="max-w-6xl p-0 bg-transparent border-none shadow-none">
+          <button
+            onClick={() => setSelectedProject(null)}
+            className="absolute -top-12 right-0 z-50 p-2 rounded-full bg-white/90 hover:bg-white transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6" style={{ color: '#1E3D59' }} />
+          </button>
+          <div className="relative">
+            <img 
+              src={selectedProject?.image} 
+              alt={selectedProject?.title} 
+              className="w-full h-auto rounded-lg shadow-2xl"
+            />
           </div>
         </DialogContent>
       </Dialog>
