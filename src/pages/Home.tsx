@@ -53,12 +53,6 @@ const Home = () => {
       href: 'tel:+491234567890',
     },
     {
-      icon: Globe,
-      label: t('website'),
-      value: 'www.fliesen-demirel.de',
-      href: 'https://www.fliesen-demirel.de',
-    },
-    {
       icon: MapPin,
       label: t('language') === 'de' ? 'Adresse' : 'Address',
       value: 'Musterstraße 123, 12345 Berlin',
@@ -354,21 +348,6 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Google Map Embed */}
-          <div className="mt-12">
-            <div className="relative w-full h-96 rounded-xl overflow-hidden shadow-lg border-2" style={{ borderColor: '#E0DED9' }}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.4092093678496!2d13.404953999999999!3d52.520008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBerlin%2C%20Germany!5e0!3m2!1sen!2sus!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Fliesen Demirel Location"
-              ></iframe>
-            </div>
-          </div>
         </div>
       </section>
 
