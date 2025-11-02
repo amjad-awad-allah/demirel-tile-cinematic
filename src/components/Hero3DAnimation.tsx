@@ -141,7 +141,7 @@ const Tile = ({ position, rotation, delay, color, size, imageUrl }: TileProps) =
         metalness={0.05}
         envMapIntensity={1.0}
         transparent={true}
-        opacity={Math.max(0.96, depthOpacity)}
+        opacity={Math.max(0.88, depthOpacity)}
       />
     </mesh>
   );
