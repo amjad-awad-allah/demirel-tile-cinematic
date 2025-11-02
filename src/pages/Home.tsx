@@ -12,6 +12,9 @@ import logo from '@/assets/logo-no-slogan.svg';
 import tilesHero from '@/assets/tiles-hero.jpg';
 import bathroomTiles from '@/assets/bathroom-tiles.jpg';
 import kitchenTiles from '@/assets/kitchen-tiles.jpg';
+import iconOrange from '@/assets/icon-orange.svg';
+import iconNavy from '@/assets/icon-navy.svg';
+import iconGray from '@/assets/icon-gray.svg';
 
 const Home = () => {
   const { t } = useLanguage();
@@ -26,16 +29,19 @@ const Home = () => {
       title: t('bathroom'),
       description: t('bathroomDesc'),
       image: bathroomTiles,
+      icon: iconOrange,
     },
     {
       title: t('kitchen'),
       description: t('kitchenDesc'),
       image: kitchenTiles,
+      icon: iconNavy,
     },
     {
       title: t('commercial'),
       description: t('commercialDesc'),
       image: tilesHero,
+      icon: iconGray,
     },
   ];
 
@@ -185,12 +191,19 @@ const Home = () => {
                     style={{ transitionDelay: '0.4s' }}
                   >
                     <div className="max-w-lg">
-                      <h3 
-                        className="text-3xl md:text-4xl font-bold mb-2"
-                        style={{ color: '#1E3D59' }}
-                      >
-                        {service.title}
-                      </h3>
+                      <div className="flex items-center gap-4 mb-2">
+                        <img 
+                          src={service.icon} 
+                          alt="" 
+                          className="w-10 h-10 md:w-12 md:h-12"
+                        />
+                        <h3 
+                          className="text-3xl md:text-4xl font-bold"
+                          style={{ color: '#1E3D59' }}
+                        >
+                          {service.title}
+                        </h3>
+                      </div>
                       <div 
                         className="w-10 h-0.5 mb-6"
                         style={{ backgroundColor: '#E8752B' }}

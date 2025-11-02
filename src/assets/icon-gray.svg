@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+	<style>
+		tspan { white-space:pre } 
+		.s0 { opacity: .82;fill: #3d5a80 } 
+	</style>
+	<g>
+		<path fill-rule="evenodd" class="s0" d="m0 0h70v70h-70z"/>
+	</g>
+	<g>
+	</g>
+</svg>

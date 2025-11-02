@@ -64,16 +64,11 @@ export const Testimonials = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div ref={animation.ref} className={`scroll-fade-in ${animation.isVisible ? 'visible' : ''} text-center mb-16`}>
-          <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ color: '#1E3D59' }}
-          >
+          <div className="section-underline mx-auto"></div>
+          <h2 className="section-title mb-4">
             {t('language') === 'de' ? 'Kundenstimmen' : 'Customer Testimonials'}
           </h2>
-          <p 
-            className="text-lg max-w-2xl mx-auto"
-            style={{ color: '#6F6F6F' }}
-          >
+          <p className="section-subtitle text-lg max-w-2xl mx-auto">
             {t('language') === 'de'
               ? 'Was unsere zufriedenen Kunden über uns sagen'
               : 'What our satisfied customers say about us'}
