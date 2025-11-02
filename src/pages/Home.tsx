@@ -79,7 +79,7 @@ const Home = () => {
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
         <Hero3DAnimation />
         
-        {/* Transparent background layer behind logo and content */}
+        {/* Transparent black background layer behind logo and content */}
         <div 
           className="absolute inset-0 z-[5] flex items-center justify-center"
           style={{ pointerEvents: 'none' }}
@@ -87,9 +87,9 @@ const Home = () => {
           <div 
             className="w-[90%] max-w-6xl h-[80%] rounded-[40px]"
             style={{
-              backgroundColor: 'rgba(248, 249, 250, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
               backdropFilter: 'blur(12px)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
             }}
           ></div>
         </div>
