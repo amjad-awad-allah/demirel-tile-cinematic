@@ -31,13 +31,13 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
     const ctx = canvas.getContext('2d');
     
     if (ctx) {
-      // Darker warm beige marble base gradient (#E9E5DE → #DCD6CF)
+      // Darker warm marble base gradient (#E2DDD6 → #D6CFC8)
       const baseGradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 1024);
-      baseGradient.addColorStop(0, '#F0EDE6');
-      baseGradient.addColorStop(0.25, '#E9E5DE');
-      baseGradient.addColorStop(0.5, '#E3DFD8');
-      baseGradient.addColorStop(0.75, '#DFDAD3');
-      baseGradient.addColorStop(1, '#DCD6CF');
+      baseGradient.addColorStop(0, '#EBE6DF');
+      baseGradient.addColorStop(0.25, '#E2DDD6');
+      baseGradient.addColorStop(0.5, '#DDD8D1');
+      baseGradient.addColorStop(0.75, '#DAD3CC');
+      baseGradient.addColorStop(1, '#D6CFC8');
       ctx.fillStyle = baseGradient;
       ctx.fillRect(0, 0, 1024, 1024);
       
@@ -164,7 +164,7 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
       <meshStandardMaterial
         map={texture}
         color={color}
-        roughness={0.35}
+        roughness={0.4}
         metalness={0.05}
         envMapIntensity={1.1}
         transparent={true}
@@ -176,16 +176,16 @@ const Tile = ({ position, rotation, delay, color, size }: TileProps) => {
 
 const TileGrid = () => {
   const tiles = useMemo(() => {
-    // Darker warm marble palette with enhanced orange accent
+    // Darker marble palette with enhanced contrast
     const colors = [
-      '#E9E5DE', // Primary: Darker beige marble
-      '#DCD6CF', // Secondary: Warm neutral gray
-      '#E9E5DE', // Primary repeated
-      '#DCD6CF', // Secondary repeated
-      '#E9E5DE', // Primary repeated
-      '#DCD6CF', // Secondary repeated
+      '#E2DDD6', // Primary: Darker warm marble
+      '#D6CFC8', // Secondary: Darker warm gray
+      '#E2DDD6', // Primary repeated
+      '#D6CFC8', // Secondary repeated
+      '#E2DDD6', // Primary repeated
+      '#D6CFC8', // Secondary repeated
       'rgba(232, 117, 43, 0.10)', // Accent: Orange glow (tile 7, 10% opacity)
-      '#E9E5DE', // Primary
+      '#E2DDD6', // Primary
     ];
     const diagonalAngle = (15 * Math.PI) / 180; // 15 degrees
     
@@ -285,11 +285,11 @@ export const Hero3DAnimation = () => {
         {/* HDRI Environment for realistic reflections */}
         <Environment preset="studio" />
         
-        {/* Reduced lighting intensity (-5%) for better depth and contrast */}
-        <ambientLight intensity={0.475} color="#FFFAF5" />
+        {/* Reduced lighting for better contrast and depth */}
+        <ambientLight intensity={0.4} color="#FFFAF5" />
         <directionalLight
           position={[-12, 15, 10]}
-          intensity={1.235}
+          intensity={1.1}
           castShadow
           shadow-mapSize={[4096, 4096]}
           shadow-camera-far={50}
@@ -314,7 +314,7 @@ export const Hero3DAnimation = () => {
           castShadow
         />
         <hemisphereLight 
-          args={['#FFFCF7', '#DCD6CF', 0.38]} 
+          args={['#FFFCF7', '#D6CFC8', 0.38]} 
         />
 
         {/* Tiles */}
