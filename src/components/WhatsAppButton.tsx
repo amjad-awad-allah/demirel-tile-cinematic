@@ -38,7 +38,7 @@ export const WhatsAppButton = () => {
         style={{
           backgroundColor: '#25D366',
           boxShadow: '0 0 20px rgba(37, 211, 102, 0.6), 0 10px 30px rgba(0, 0, 0, 0.06)',
-          borderWidth: '3px',
+          borderWidth: '1px',
           borderColor: 'white',
         }}
         aria-label="Contact via WhatsApp"
