@@ -55,16 +55,16 @@ const Home = () => {
     {
       icon: Phone,
       label: t('phone'),
-      value: '+49 17670037963',
-      href: 'tel:+4917670037963',
+      value: '+49 123 456 7890',
+      href: 'tel:+491234567890',
     },
     {
       icon: MapPin,
       label: t('language') === 'de' ? 'Adresse' : 'Address',
-      value: 'Allensteiner Str. 6, 45701 Herten',
-      href: 'https://maps.google.com/?q=Allensteiner+Str.+6,+45701+Herten',
+      value: 'Musterstraße 123, 12345 Berlin',
+      href: 'https://maps.google.com/?q=Berlin',
     },
-
+  ];
 
   const scrollToContact = () => {
     const element = document.getElementById('contact');
