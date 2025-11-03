@@ -12,8 +12,8 @@ const WhatsAppIcon = () => (
 
 export const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = ''; // Add phone number in format: 491234567890
-    const message = encodeURIComponent('Hello! I would like to inquire about your tile services.');
+    const phoneNumber = '+4917670037963';
+    const message = encodeURIComponent('Hallo! Ich möchte mich nach Ihren Fliesen-Dienstleistungen erkundigen.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
@@ -34,7 +34,7 @@ export const WhatsAppButton = () => {
         className="relative w-14 h-14 rounded-full text-white p-0 flex items-center justify-center transition-all duration-300 
                    shadow-lg hover:scale-110 hover:bg-[#128C7E]"
         style={{
-          boxShadow: '0 0 20px rgba(37, 211, 102, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3)',
+          boxShadow: '0 0 20px rgba(37, 211, 102, 0.6), 0 10px 30px rgba(0, 0, 0, 0.06)',
           borderWidth: '3px',
           borderColor: 'white',
         }}
