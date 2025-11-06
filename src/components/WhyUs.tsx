@@ -10,31 +10,23 @@ export const WhyUs = () => {
   const features = [
     {
       icon: Award,
-      title: t('language') === 'de' ? 'Meisterqualität' : 'Master Quality',
-      description: t('language') === 'de' 
-        ? 'Zertifizierter Meisterbetrieb mit über 20 Jahren Erfahrung'
-        : 'Certified master craftsman with over 20 years of experience',
+      title: t('masterQuality'),
+      description: t('masterQualityDesc'),
     },
     {
       icon: Clock,
-      title: t('language') === 'de' ? 'Pünktlichkeit' : 'Punctuality',
-      description: t('language') === 'de'
-        ? 'Termingerechte Fertigstellung aller Projekte'
-        : 'On-time completion of all projects',
+      title: t('punctuality'),
+      description: t('punctualityDesc'),
     },
     {
       icon: Shield,
-      title: t('language') === 'de' ? 'Garantie' : 'Warranty',
-      description: t('language') === 'de'
-        ? 'Umfassende Garantie auf alle Arbeiten'
-        : 'Comprehensive warranty on all work',
+      title: t('warranty'),
+      description: t('warrantyDesc'),
     },
     {
       icon: CheckCircle,
-      title: t('language') === 'de' ? 'Zufriedenheit' : 'Satisfaction',
-      description: t('language') === 'de'
-        ? '100% Kundenzufriedenheit ist unser Ziel'
-        : '100% customer satisfaction is our goal',
+      title: t('satisfaction'),
+      description: t('satisfactionDesc'),
     },
   ];
 
@@ -50,15 +42,13 @@ export const WhyUs = () => {
             className="text-4xl md:text-5xl font-bold mb-4"
             style={{ color: '#1E3D59' }}
           >
-            {t('language') === 'de' ? 'Warum Fliesen Demirel?' : 'Why Fliesen Demirel?'}
+            {t('whyUsTitle')}
           </h2>
           <p 
             className="text-lg max-w-2xl mx-auto"
             style={{ color: '#6F6F6F' }}
           >
-            {t('language') === 'de'
-              ? 'Vertrauen Sie auf Qualität, Erfahrung und Zuverlässigkeit'
-              : 'Trust in quality, experience and reliability'}
+            {t('whyUsSubtitle')}
           </p>
         </div>
 

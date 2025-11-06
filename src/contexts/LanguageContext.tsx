@@ -48,6 +48,18 @@ const translations = {
     website: 'Website',
     whatsapp: 'WhatsApp',
     
+    // Why Us
+    whyUsTitle: 'Why Fliesen Demirel?',
+    whyUsSubtitle: 'Trust in quality, experience and reliability',
+    masterQuality: 'Master Quality',
+    masterQualityDesc: 'Certified master craftsman with over 20 years of experience',
+    punctuality: 'Punctuality',
+    punctualityDesc: 'On-time completion of all projects',
+    warranty: 'Warranty',
+    warrantyDesc: 'Comprehensive warranty on all work',
+    satisfaction: 'Satisfaction',
+    satisfactionDesc: '100% customer satisfaction is our goal',
+    
     // Legal
     impressum: 'Legal Notice',
     privacy: 'Privacy Policy',
@@ -109,6 +121,18 @@ const translations = {
     phone: 'Telefon',
     website: 'Webseite',
     whatsapp: 'WhatsApp',
+    
+    // Why Us
+    whyUsTitle: 'Warum Fliesen Demirel?',
+    whyUsSubtitle: 'Vertrauen Sie auf Qualität, Erfahrung und Zuverlässigkeit',
+    masterQuality: 'Meisterqualität',
+    masterQualityDesc: 'Zertifizierter Meisterbetrieb mit über 20 Jahren Erfahrung',
+    punctuality: 'Pünktlichkeit',
+    punctualityDesc: 'Termingerechte Fertigstellung aller Projekte',
+    warranty: 'Garantie',
+    warrantyDesc: 'Umfassende Garantie auf alle Arbeiten',
+    satisfaction: 'Zufriedenheit',
+    satisfactionDesc: '100% Kundenzufriedenheit ist unser Ziel',
     
     // Legal
     impressum: 'Impressum',
