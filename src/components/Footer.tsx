@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/logo-transparent.svg';
+import { LegalPopup } from './LegalPopup';
+
 export const Footer = () => {
-  const {
-    t
-  } = useLanguage();
+  const { t } = useLanguage();
+  const [legalPopup, setLegalPopup] = useState<'impressum' | 'privacy' | null>(null);
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -13,20 +15,10 @@ export const Footer = () => {
       });
     }
   };
-  const socialLinks = [{
-    icon: Facebook,
-    url: 'https://facebook.com',
-    label: 'Facebook'
-  }, {
-    icon: Instagram,
-    url: 'https://instagram.com',
-    label: 'Instagram'
-  }, {
-    icon: Linkedin,
-    url: 'https://linkedin.com',
-    label: 'LinkedIn'
-  }];
-  return <footer className="relative overflow-hidden py-12 text-white" style={{
+  return (
+    <>
+      <LegalPopup type={legalPopup} onClose={() => setLegalPopup(null)} />
+      <footer className="relative overflow-hidden py-12 text-white" style={{
     background: 'linear-gradient(135deg, #1E3D59 0%, #283E62 100%)'
   }}>
       {/* Orange divider line */}
@@ -40,7 +32,7 @@ export const Footer = () => {
     }}></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-4 gap-12 mb-8">
+        <div className="grid md:grid-cols-3 gap-12 mb-8">
           {/* Logo & About */}
           <div>
             <img src={logo} alt="Fliesen Demirel" className="h-16 w-auto mb-4 brightness-0 invert" />
@@ -140,40 +132,38 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Media */}
-          <div>
-            <h3 style={{
-            letterSpacing: '0.05em'
-          }} className="text-lg font-semibold mb-4 text-slate-50">
-              {t('language') === 'de' ? 'Folgen Sie uns' : 'Follow Us'}
-            </h3>
-            <div className="flex gap-4">
-              {socialLinks.map((social, index) => <a key={index} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.1)'
-            }} onMouseEnter={e => {
-              e.currentTarget.style.backgroundColor = 'rgba(232, 117, 43, 0.2)';
-              e.currentTarget.style.borderColor = '#E8752B';
-            }} onMouseLeave={e => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-              e.currentTarget.style.borderColor = 'transparent';
-            }} aria-label={social.label}>
-                  <social.icon className="w-5 h-5" />
-                </a>)}
-            </div>
-          </div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright & Legal Links */}
         <div className="border-t pt-8 text-center" style={{
-        borderColor: 'rgba(255, 255, 255, 0.2)'
-      }}>
-          <p className="text-sm" style={{
-          color: '#999999',
-          letterSpacing: '0.02em'
+          borderColor: 'rgba(255, 255, 255, 0.2)'
         }}>
+          <div className="flex flex-wrap justify-center gap-6 mb-4">
+            <button
+              onClick={() => setLegalPopup('impressum')}
+              className="text-sm transition-colors hover:text-accent"
+              style={{ color: '#CCCCCC', letterSpacing: '0.02em' }}
+            >
+              {t('impressum')}
+            </button>
+            <span style={{ color: '#666666' }}>|</span>
+            <button
+              onClick={() => setLegalPopup('privacy')}
+              className="text-sm transition-colors hover:text-accent"
+              style={{ color: '#CCCCCC', letterSpacing: '0.02em' }}
+            >
+              {t('privacy')}
+            </button>
+          </div>
+          <p className="text-sm" style={{
+            color: '#999999',
+            letterSpacing: '0.02em'
+          }}>
             © {new Date().getFullYear()} Fliesen Demirel Meisterbetrieb. {t('language') === 'de' ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}
           </p>
         </div>
       </div>
-    </footer>;
+    </footer>
+    </>
+  );
 };

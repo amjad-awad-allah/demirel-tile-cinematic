@@ -83,7 +83,7 @@ const Home = () => {
           <div className="mb-6 sm:mb-8 md:mb-12 animate-fade-in">
             <img 
               src={logo} 
-              alt="Fliesen Demirel" 
+              alt="Fliesen Demirel Meisterbetrieb Logo - Premium Fliesenleger Berlin" 
               className="h-32 sm:h-40 md:h-56 lg:h-72 w-auto mx-auto drop-shadow-2xl"
             />
           </div>
@@ -173,32 +173,32 @@ const Home = () => {
                   <div 
                     className={`flex-1 ${
                       index % 2 === 0 ? 'animate-fade-up' : 'animate-slide-in-right'
-                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'}`}
+                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'} transition-all duration-700`}
                     style={{ transitionDelay: '0.2s' }}
                   >
-                    <div className="relative w-full h-full min-h-[400px]">
+                    <div className="relative w-full h-full min-h-[400px] overflow-hidden group">
                       <img
                         src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover"
+                        alt={`${service.title} - Professionelle Fliesenverlegung von Fliesen Demirel Meisterbetrieb`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   </div>
                   <div 
                     className={`flex-1 flex flex-col justify-center p-12 md:p-16 ${
                       index % 2 === 0 ? 'animate-slide-in-right' : 'animate-fade-up'
-                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'}`}
+                    } ${animation.isVisible ? 'opacity-100' : 'opacity-0'} transition-all duration-700 hover:shadow-lg`}
                     style={{ transitionDelay: '0.4s' }}
                   >
                     <div className="max-w-lg">
                       <div className="flex items-center gap-4 mb-2">
                         <img 
                           src={service.icon} 
-                          alt="" 
-                          className="w-10 h-10 md:w-12 md:h-12"
+                          alt={`${service.title} Icon`}
+                          className="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 hover:scale-110"
                         />
                         <h3 
-                          className="text-3xl md:text-4xl font-bold"
+                          className="text-3xl md:text-4xl font-bold transition-colors duration-300 hover:text-accent"
                           style={{ color: '#1E3D59' }}
                         >
                           {service.title}
@@ -320,7 +320,7 @@ const Home = () => {
             {contactInfo.map((item, index) => (
               <div
                 key={index}
-                className="contact-tile-card p-6 cursor-pointer tile-animate"
+                className="contact-tile-card p-6 cursor-pointer tile-animate transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                 onClick={() => window.open(item.href, '_self')}
                 style={{ 
                   animationDelay: `${index * 100}ms`,
