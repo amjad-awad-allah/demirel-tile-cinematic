@@ -61,8 +61,9 @@ const Home = () => {
     {
       icon: MapPin,
       label: t('language') === 'de' ? 'Adresse' : 'Address',
-      value: 'Musterstraße 123, 12345 Berlin',
-      href: 'https://maps.google.com/?q=Berlin',
+
+      value: 'Allensteiner Str. 6, 45701 Herten',
+      href: 'https://maps.google.com/?q=Herten',
     },
   ];
 
@@ -83,7 +84,7 @@ const Home = () => {
           <div className="mb-6 sm:mb-8 md:mb-12 animate-fade-in">
             <img 
               src={logo} 
-              alt="Fliesen Demirel Meisterbetrieb Logo - Premium Fliesenleger Berlin" 
+              alt="Fliesen Demirel Meisterbetrieb Logo" 
               className="h-32 sm:h-40 md:h-56 lg:h-72 w-auto mx-auto drop-shadow-2xl"
             />
           </div>
@@ -252,8 +253,8 @@ const Home = () => {
               style={{ color: '#1E3D59', lineHeight: '1.8' }}
             >
               {t('language') === 'de' 
-                ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Berlin und Umgebung.'
-                : 'Fliesen Demirel Meisterbetrieb is your reliable partner for high-quality tile work in Berlin and surrounding areas.'}
+                ? 'Fliesen Demirel Meisterbetrieb ist Ihr verlässlicher Partner für hochwertige Fliesenarbeiten in Herten und Umgebung.'
+                : 'Fliesen Demirel Meisterbetrieb is your reliable partner for high-quality tile work in Herten and surrounding areas.'}
             </p>
             <p 
               className="text-lg leading-relaxed mb-6 text-center"

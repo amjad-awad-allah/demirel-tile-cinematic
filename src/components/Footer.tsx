@@ -126,7 +126,7 @@ export const Footer = () => {
                 color: '#CCCCCC',
                 letterSpacing: '0.02em'
               }}>
-                  Musterstraße 123, 12345 Berlin
+                Allensteiner Str. 6, 45701 Herten
                 </span>
               </li>
             </ul>

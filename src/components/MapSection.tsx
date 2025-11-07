@@ -13,7 +13,7 @@ export const MapSection = () => {
             {t('language') === 'de' ? 'Besuchen Sie uns' : 'Visit Us'}
           </h2>
           <p className="text-lg text-muted-foreground">
-            {t('language') === 'de' ? 'Standort Berlin' : 'Location Berlin'}
+            {t('language') === 'de' ? 'Standort Herten' : 'Location Herten'}
           </p>
         </div>
 

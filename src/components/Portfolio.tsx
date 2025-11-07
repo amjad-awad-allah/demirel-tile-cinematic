@@ -15,9 +15,9 @@ export const Portfolio = () => {
   const [visibleTiles, setVisibleTiles] = useState<boolean[]>([]);
   const projects = [{
     image: bathroomTiles,
-    title: t('language') === 'de' ? 'Badezimmer Projekt, Berlin' : 'Bathroom Project, Berlin',
+    title: t('language') === 'de' ? 'Badezimmer Projekt, Herten' : 'Bathroom Project, Herten',
     category: t('language') === 'de' ? 'Badezimmer' : 'Bathroom',
-    location: 'Berlin',
+    location: 'Herten',
     description: t('language') === 'de' ? 'Moderne Badgestaltung mit hochwertigen Fliesen' : 'Modern bathroom design with high-quality tiles'
   }, {
     image: kitchenTiles,
