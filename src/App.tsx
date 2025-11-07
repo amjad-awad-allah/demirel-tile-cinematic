@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { Navigation } from "./components/Navigation";
 import { WhatsAppButton } from "./components/WhatsAppButton";
+import { DevelopmentBanner } from "./components/DevelopmentBanner";
 import Home from "./pages/Home";
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <DevelopmentBanner />
           <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />

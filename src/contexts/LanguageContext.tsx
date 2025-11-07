@@ -10,6 +10,9 @@ interface LanguageContextType {
 
 const translations = {
   en: {
+    // Development Notice
+    developmentNotice: '⚠️ This website is currently under construction. The information displayed is not accurate and is for development purposes only.',
+    
     // Navigation
     home: 'Home',
     services: 'Services',
@@ -84,6 +87,9 @@ const translations = {
     changesText: 'We reserve the right to update this privacy policy to reflect changes in our practices or legal requirements.',
   },
   de: {
+    // Development Notice
+    developmentNotice: '⚠️ Diese Website befindet sich im Aufbau. Die angezeigten Informationen sind nicht korrekt und dienen nur zu Entwicklungszwecken.',
+    
     // Navigation
     home: 'Startseite',
     services: 'Leistungen',
