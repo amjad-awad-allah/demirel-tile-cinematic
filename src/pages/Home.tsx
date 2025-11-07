@@ -74,7 +74,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-32">
       {/* Hero Section */}
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-background">
         <Hero3DAnimation />
