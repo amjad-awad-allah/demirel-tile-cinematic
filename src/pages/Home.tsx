@@ -63,7 +63,7 @@ const Home = () => {
       label: t('language') === 'de' ? 'Adresse' : 'Address',
 
       value: 'Allensteiner Str. 6, 45701 Herten',
-      href: 'https://maps.google.com/?q=Herten',
+      href: 'https://www.google.com/maps/search/?api=1&query=Allensteiner+Str.+6,+45701+Herten&zoom=15',
     },
   ];
 
